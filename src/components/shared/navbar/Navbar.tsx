@@ -14,7 +14,12 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignIn, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import {
+    faFolder,
+    faGear,
+    faSignIn,
+    faSignOut,
+} from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from 'react-redux';
 import { userLoggedOut } from '../../../features/auth/authSlice';
 import Cookies from 'js-cookie';
@@ -22,6 +27,7 @@ import useAuth from '../../../hooks/useAuth';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../app/store';
 import Prover from '../../accountSettings/Prover';
+import { IUser } from '../../../hooks/user.interface';
 
 const services = [
     {
@@ -56,9 +62,13 @@ const services = [
 
 export default function Navbar() {
     const dispatch = useDispatch();
-    const user = useSelector((state: RootState) => state.auth.user);
+    const user = useSelector((state: RootState) => state.auth?.user) as IUser;
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const authChecked = useAuth();
+
+    if (!user) {
+        return null;
+    }
 
     const handleSignOut = () => {
         dispatch(userLoggedOut());
@@ -67,7 +77,7 @@ export default function Navbar() {
     };
 
     return (
-        <header className="bg-white">
+        <header className="bg-white border-b">
             <nav
                 aria-label="Global"
                 className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
@@ -187,7 +197,7 @@ export default function Navbar() {
                     <div className="flex items-center justify-between">
                         <Link
                             to="/"
-                            className="-m-1.5 p-1.5 font-cairoPlay text-4xl"
+                            className="-m-1.5 p-1.5 font-cairoPlay text-2xl md:text-4xl"
                         >
                             iExample.com
                         </Link>
@@ -265,16 +275,53 @@ export default function Navbar() {
                                     Free Trail
                                 </Link>
                                 {authChecked ? (
-                                    <button
-                                        type="button"
-                                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 w-full text-start"
-                                        onClick={handleSignOut}
-                                    >
-                                        <span>
-                                            Log Out{' '}
-                                            <FontAwesomeIcon icon={faSignOut} />
-                                        </span>
-                                    </button>
+                                    <Disclosure as="div" className="-mx-3">
+                                        <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
+                                            <div className="flex items-center gap-x-3">
+                                                <img
+                                                    src={user?.profileImage}
+                                                    alt={user?.profileImage}
+                                                    className="h-6 w-6 rounded-full ring ring-offset-2"
+                                                />
+                                            </div>
+                                            <ChevronDownIcon
+                                                aria-hidden="true"
+                                                className="h-5 w-5 flex-none group-data-[open]:rotate-180"
+                                            />
+                                        </DisclosureButton>
+                                        <DisclosurePanel className="mt-2 space-y-2">
+                                            <DisclosureButton
+                                                as="a"
+                                                href={'/dashboard'}
+                                                className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50 space-x-2"
+                                            >
+                                                <span>Dashboard</span>
+                                                <FontAwesomeIcon
+                                                    icon={faFolder}
+                                                />
+                                            </DisclosureButton>
+                                            <DisclosureButton
+                                                as="a"
+                                                href={'/account-settings'}
+                                                className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50 space-x-2"
+                                            >
+                                                <span>Account Settings</span>
+                                                <FontAwesomeIcon
+                                                    icon={faGear}
+                                                />
+                                            </DisclosureButton>
+                                            <DisclosureButton
+                                                as="button"
+                                                className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50 space-x-2"
+                                                onClick={handleSignOut}
+                                            >
+                                                <span>Sign Out</span>
+                                                <FontAwesomeIcon
+                                                    icon={faSignOut}
+                                                />
+                                            </DisclosureButton>
+                                        </DisclosurePanel>
+                                    </Disclosure>
                                 ) : (
                                     <Link
                                         to={'/login'}

@@ -35,9 +35,13 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
             username,
             email,
             phone,
-            password,
             profileImage,
-        };
+        } as IUser;
+
+        if (password.trim()) {
+            updatedUser.password = password;
+        }
+
         try {
             if (user._id) {
                 await axios.patch(

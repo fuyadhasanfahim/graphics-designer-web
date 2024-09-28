@@ -15,6 +15,9 @@ import useAuthCheck from './hooks/useAuthCheck';
 import PrivateRoute from './routes/PrivateRoute';
 import PublicRoute from './routes/PublicRoute';
 import AccountSettings from './pages/accountSettings/AccountSettings';
+import DashBoardPage from './pages/dashboard/DashBoardPage';
+import DashAccountSettings from './pages/accountSettings/DashAccountSettings';
+import CreateOrder from './pages/create-order/CreateOrderPage';
 
 const App: React.FC = () => {
     const authChecked = useAuthCheck();
@@ -48,6 +51,30 @@ const App: React.FC = () => {
                             element={
                                 <PrivateRoute>
                                     <AccountSettings />
+                                </PrivateRoute>
+                            }
+                        />
+                        <Route
+                            path="/dashboard"
+                            element={
+                                <PrivateRoute>
+                                    <DashBoardPage />
+                                </PrivateRoute>
+                            }
+                        />
+                        <Route
+                            path="/dashboard/create-order"
+                            element={
+                                <PrivateRoute>
+                                    <CreateOrder />
+                                </PrivateRoute>
+                            }
+                        />
+                        <Route
+                            path="/dashboard/update-info"
+                            element={
+                                <PrivateRoute>
+                                    <DashAccountSettings />
                                 </PrivateRoute>
                             }
                         />

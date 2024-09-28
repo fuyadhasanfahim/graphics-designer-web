@@ -4,21 +4,30 @@ export default function CarouselSlider() {
     useEffect(() => {
         const interval = setInterval(() => {
             const carousel = document.getElementById('carouselExampleCaptions');
-            const activeItem = carousel.querySelector(
-                '[data-te-carousel-item].block',
-            );
-            let nextItem = activeItem.nextElementSibling;
+            if (carousel) {
+                const activeItem = carousel.querySelector(
+                    '[data-te-carousel-item].block',
+                ) as HTMLElement | null; // Assert type for clarity
+                let nextItem =
+                    activeItem?.nextElementSibling as HTMLElement | null;
 
-            if (!nextItem) {
-                nextItem = carousel.querySelector(
-                    '[data-te-carousel-item]:first-child',
-                );
+                if (!nextItem) {
+                    nextItem = carousel.querySelector(
+                        '[data-te-carousel-item]:first-child',
+                    ) as HTMLElement | null;
+                }
+
+                if (activeItem) {
+                    // Check if activeItem is not null
+                    activeItem.classList.remove('block');
+                    activeItem.classList.add('hidden');
+                }
+                if (nextItem) {
+                    // Check if nextItem is not null
+                    nextItem.classList.add('block');
+                    nextItem.classList.remove('hidden');
+                }
             }
-
-            activeItem.classList.remove('block');
-            activeItem.classList.add('hidden');
-            nextItem.classList.add('block');
-            nextItem.classList.remove('hidden');
         }, 3000);
 
         return () => clearInterval(interval);
@@ -26,40 +35,57 @@ export default function CarouselSlider() {
 
     const handlePrev = () => {
         const carousel = document.getElementById('carouselExampleCaptions');
-        const activeItem = carousel.querySelector(
-            '[data-te-carousel-item].block',
-        );
-        let prevItem = activeItem.previousElementSibling;
+        if (carousel) {
+            const activeItem = carousel.querySelector(
+                '[data-te-carousel-item].block',
+            ) as HTMLElement | null;
+            let prevItem =
+                activeItem?.previousElementSibling as HTMLElement | null;
 
-        if (!prevItem) {
-            prevItem = carousel.querySelector(
-                '[data-te-carousel-item]:last-child',
-            );
+            if (!prevItem) {
+                prevItem = carousel.querySelector(
+                    '[data-te-carousel-item]:last-child',
+                ) as HTMLElement | null;
+            }
+
+            if (activeItem) {
+                // Check if activeItem is not null
+                activeItem.classList.remove('block');
+                activeItem.classList.add('hidden');
+            }
+            if (prevItem) {
+                // Check if prevItem is not null
+                prevItem.classList.add('block');
+                prevItem.classList.remove('hidden');
+            }
         }
-
-        activeItem.classList.remove('block');
-        activeItem.classList.add('hidden');
-        prevItem.classList.add('block');
-        prevItem.classList.remove('hidden');
     };
 
     const handleNext = () => {
         const carousel = document.getElementById('carouselExampleCaptions');
-        const activeItem = carousel.querySelector(
-            '[data-te-carousel-item].block',
-        );
-        let nextItem = activeItem.nextElementSibling;
+        if (carousel) {
+            const activeItem = carousel.querySelector(
+                '[data-te-carousel-item].block',
+            ) as HTMLElement | null;
+            let nextItem = activeItem?.nextElementSibling as HTMLElement | null;
 
-        if (!nextItem) {
-            nextItem = carousel.querySelector(
-                '[data-te-carousel-item]:first-child',
-            );
+            if (!nextItem) {
+                nextItem = carousel.querySelector(
+                    '[data-te-carousel-item]:first-child',
+                ) as HTMLElement | null;
+            }
+
+            if (activeItem) {
+                // Check if activeItem is not null
+                activeItem.classList.remove('block');
+                activeItem.classList.add('hidden');
+            }
+            if (nextItem) {
+                // Check if nextItem is not null
+                nextItem.classList.add('block');
+                nextItem.classList.remove('hidden');
+            }
         }
-
-        activeItem.classList.remove('block');
-        activeItem.classList.add('hidden');
-        nextItem.classList.add('block');
-        nextItem.classList.remove('hidden');
     };
 
     return (

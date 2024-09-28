@@ -27,7 +27,7 @@ export default function SignUpPage() {
                 navigate('/');
             }, 2000);
         } else if (error) {
-            toast.error(error?.data?.message);
+            toast.error((error as Error).message);
         }
     }, [data, error, navigate]);
 

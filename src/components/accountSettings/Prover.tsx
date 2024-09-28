@@ -4,7 +4,12 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
 import { Link } from 'react-router-dom';
 
-export default function Prover({ image, signOut }) {
+interface ProverInterface {
+    image: string;
+    signOut: () => void;
+}
+
+export default function Prover({ image, signOut }: ProverInterface) {
     return (
         <div className="text-center">
             <Menu>

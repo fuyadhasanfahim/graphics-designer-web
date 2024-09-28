@@ -1,4 +1,14 @@
-export default function ConfirmationModal({ isOpen, onClose, onConfirm }) {
+interface ConfirmationModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    onConfirm: () => void;
+}
+
+export default function ConfirmationModal({
+    isOpen,
+    onClose,
+    onConfirm,
+}: ConfirmationModalProps) {
     if (!isOpen) return null;
 
     return (

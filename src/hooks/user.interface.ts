@@ -1,4 +1,4 @@
-export interface IUser {
+export interface IUser extends Document {
     _id: string;
     name: {
         firstName: string;
@@ -9,5 +9,4 @@ export interface IUser {
     phone: string;
     password: string;
     profileImage: string;
-    isDeleted: boolean;
 }

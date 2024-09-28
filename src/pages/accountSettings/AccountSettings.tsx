@@ -8,13 +8,16 @@ import { IUser } from '../../hooks/user.interface';
 import { useState } from 'react';
 import UpdateUserModal from '../../components/accountSettings/UpdateUserModal';
 import ConfirmationModal from '../../components/accountSettings/ConfirmationModal';
+import { useLocation } from 'react-router-dom';
 
 const AccountSettings = () => {
-    const user: IUser = useSelector((state: RootState) => state.auth.user);
+    const user = useSelector((state: RootState) => state.auth.user) as IUser;
     const { name, email, username, profileImage } = user;
     const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
     const [isConfirmationModalOpen, setIsConfirmationModalOpen] =
         useState(false);
+    const location = useLocation();
+    console.log(location.pathname.toString());
 
     const [deleteUser] = useDeleteUserMutation();
 
@@ -43,8 +46,8 @@ const AccountSettings = () => {
 
     return (
         <>
-            <div className="flex justify-center items-center min-h-screen bg-gray-50 p-4">
-                <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md">
+            <div className="flex justify-center items-center h-dvh w-full p-4">
+                <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md -mt-10">
                     <div className="flex flex-col items-center">
                         <img
                             src={profileImage}
@@ -68,13 +71,15 @@ const AccountSettings = () => {
                             <FontAwesomeIcon icon={faEdit} />
                             Update
                         </button>
-                        <button
-                            className="flex gap-x-2 items-center rounded bg-red-100 px-4 py-2 text-sm font-medium text-red-600"
-                            onClick={openConfirmationModal}
-                        >
-                            <FontAwesomeIcon icon={faTrash} />
-                            Delete
-                        </button>
+                        {location.pathname !== '/dashboard/update-info' && (
+                            <button
+                                className="flex gap-x-2 items-center rounded bg-red-100 px-4 py-2 text-sm font-medium text-red-600"
+                                onClick={openConfirmationModal}
+                            >
+                                <FontAwesomeIcon icon={faTrash} />
+                                Delete
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
