@@ -167,7 +167,7 @@ export default function DashNav() {
             <Dialog
                 open={mobileMenuOpen}
                 onClose={() => setMobileMenuOpen(false)}
-                className="relative sm:hidden"
+                className="relative lg:hidden"
             >
                 <div className="fixed inset-0 top-0 flex">
                     <DialogPanel className="absolute h-dvh w-full max-w-xs bg-white">
@@ -209,7 +209,7 @@ export default function DashNav() {
                 </div>
             </Dialog>
 
-            <div className="hidden sm:flex h-dvh flex-col justify-between bg-white w-full max-w-sm border-e z-50">
+            <div className="hidden lg:flex h-dvh flex-col justify-between bg-white w-full max-w-sm border-e z-50">
                 <div className="px-4 py-6">{navigationLinks}</div>
                 <div className="sticky inset-x-0 bottom-0 border-t border-gray-100">
                     <div className="flex items-center gap-2 bg-white p-4 hover:bg-gray-50">

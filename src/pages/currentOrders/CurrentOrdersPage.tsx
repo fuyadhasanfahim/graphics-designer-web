@@ -1,12 +1,12 @@
-import Dashboard from '../../components/dashboard/Dashboard';
+import CurrentOrders from '../../components/currentOrders/CurrentOrders';
 import DashNav from '../../components/shared/dashboardNavbar/DashNav';
 
-export default function DashBoardPage() {
+export default function CurrentOrdersPage() {
     return (
         <>
             <div className="flex">
                 <DashNav />
-                <Dashboard />
+                <CurrentOrders />
             </div>
         </>
     );

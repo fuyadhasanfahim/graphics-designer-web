@@ -1,5 +1,6 @@
 export interface IUser extends Document {
     _id: string;
+    id: string;
     name: {
         firstName: string;
         lastName: string;

@@ -23,7 +23,6 @@ import {
 import { useDispatch } from 'react-redux';
 import { userLoggedOut } from '../../../features/auth/authSlice';
 import Cookies from 'js-cookie';
-import useAuth from '../../../hooks/useAuth';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../app/store';
 import Prover from '../../accountSettings/Prover';
@@ -64,11 +63,8 @@ export default function Navbar() {
     const dispatch = useDispatch();
     const user = useSelector((state: RootState) => state.auth?.user) as IUser;
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const authChecked = useAuth();
+    // const authChecked = useAuth();
 
-    if (!user) {
-        return null;
-    }
 
     const handleSignOut = () => {
         dispatch(userLoggedOut());
@@ -169,9 +165,9 @@ export default function Navbar() {
                 </PopoverGroup>
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
                     <div className="space-x-2">
-                        {authChecked ? (
+                        {user ? (
                             <Prover
-                                image={user?.profileImage}
+                                image={`${user !== null && user?.profileImage}`}
                                 signOut={handleSignOut}
                             />
                         ) : (
@@ -258,7 +254,7 @@ export default function Navbar() {
                                 >
                                     Contact
                                 </Link>
-                                {authChecked && (
+                                {user && (
                                     <Link
                                         to={'/profile'}
                                         className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
@@ -274,15 +270,31 @@ export default function Navbar() {
                                 >
                                     Free Trail
                                 </Link>
-                                {authChecked ? (
+                                {user ? (
                                     <Disclosure as="div" className="-mx-3">
                                         <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
                                             <div className="flex items-center gap-x-3">
                                                 <img
-                                                    src={user?.profileImage}
-                                                    alt={user?.profileImage}
+                                                    src={`${
+                                                        user !== null &&
+                                                        user?.profileImage
+                                                    }`}
+                                                    alt={`${
+                                                        user !== null &&
+                                                        user?.profileImage
+                                                    }`}
                                                     className="h-6 w-6 rounded-full ring ring-offset-2"
                                                 />
+                                                <p>
+                                                    {`${
+                                                        user !== null &&
+                                                        user?.name?.firstName
+                                                    }`}{' '}
+                                                    {`${
+                                                        user !== null &&
+                                                        user?.name?.lastName
+                                                    }`}
+                                                </p>
                                             </div>
                                             <ChevronDownIcon
                                                 aria-hidden="true"

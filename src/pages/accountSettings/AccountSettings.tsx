@@ -17,7 +17,6 @@ const AccountSettings = () => {
     const [isConfirmationModalOpen, setIsConfirmationModalOpen] =
         useState(false);
     const location = useLocation();
-    console.log(location.pathname.toString());
 
     const [deleteUser] = useDeleteUserMutation();
 
