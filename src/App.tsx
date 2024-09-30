@@ -19,6 +19,7 @@ import DashBoardPage from './pages/dashboard/DashBoardPage';
 import DashAccountSettings from './pages/accountSettings/DashAccountSettings';
 import CreateOrder from './pages/create-order/CreateOrderPage';
 import CurrentOrders from './pages/currentOrders/CurrentOrdersPage';
+import UsersPage from './pages/admin/UsersPage';
 
 const App: React.FC = () => {
     const authChecked = useAuthCheck();
@@ -68,6 +69,14 @@ const App: React.FC = () => {
                             element={
                                 <PrivateRoute>
                                     <CurrentOrders />
+                                </PrivateRoute>
+                            }
+                        />
+                        <Route
+                            path="/dashboard/users"
+                            element={
+                                <PrivateRoute>
+                                    <UsersPage />
                                 </PrivateRoute>
                             }
                         />

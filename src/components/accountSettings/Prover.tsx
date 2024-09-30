@@ -28,13 +28,13 @@ export default function Prover({ image, signOut }: ProverInterface) {
                     className="w-52 origin-top-right rounded-xl border border-gray-200 bg-white p-1 text-sm/6 text-gray-800 transition duration-100 ease-out backdrop-blur-md [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0"
                 >
                     <MenuItem>
-                        <Link
-                            to={'/dashboard'}
+                        <a
+                            href={'/dashboard'}
                             className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 text-gray-800 hover:bg-gray-100 space-x-2"
                         >
                             Dashboard
                             <FontAwesomeIcon icon={faFolder} />
-                        </Link>
+                        </a>
                     </MenuItem>
                     <MenuItem>
                         <Link

@@ -23,9 +23,18 @@ const AccountSettings = () => {
     const handleDelete = async () => {
         try {
             if (user?._id) {
-                await deleteUser(user._id).unwrap();
-                toast.success('Account deleted successfully');
-                setIsConfirmationModalOpen(false);
+                if (user?.role === 'SuperAdmin') {
+                    toast.error("SuperAdmin can't be deleted");
+                } else {
+                    try {
+                        await deleteUser(user._id).unwrap();
+                        toast.success('Account deleted successfully');
+                        setIsConfirmationModalOpen(false);
+                    } catch (error) {
+                        toast.error('Error deleting the account');
+                        console.error('Error during deletion:', error);
+                    }
+                }
             } else {
                 toast.error('User ID is missing');
             }

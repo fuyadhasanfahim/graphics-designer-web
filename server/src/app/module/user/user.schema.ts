@@ -20,6 +20,11 @@ const userSchema = new Schema<IUser>(
             type: String,
             default: 'https://i.ibb.co.com/7nxJWyv/download.png',
         },
+        role: {
+            type: String,
+            enum: ['SuperAdmin', 'Admin', 'User'],
+            default: 'User',
+        },
         isDeleted: { type: Boolean, default: false },
     },
     {

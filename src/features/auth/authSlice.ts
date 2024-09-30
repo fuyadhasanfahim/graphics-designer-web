@@ -3,11 +3,13 @@ import { createSlice } from '@reduxjs/toolkit';
 interface AuthState {
     accessToken: string | undefined;
     user: object | undefined;
+    users: object[];
 }
 
 const initialState: AuthState = {
     accessToken: undefined,
     user: undefined,
+    users: [],
 };
 
 const authSlice = createSlice({
@@ -21,9 +23,13 @@ const authSlice = createSlice({
         userLoggedOut: (state) => {
             state.accessToken = undefined;
             state.user = undefined;
+            state.users = [];
+        },
+        getAllUsers: (state, action) => {
+            state.users = action.payload;
         },
     },
 });
 
-export const { userLoggedIn, userLoggedOut } = authSlice.actions;
+export const { userLoggedIn, userLoggedOut, getAllUsers } = authSlice.actions;
 export default authSlice.reducer;

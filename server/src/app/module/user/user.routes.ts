@@ -1,6 +1,7 @@
 import express from 'express'
 import {
     deleteUser,
+    getAllUsersController,
     getCurrentUser,
     login,
     register,
@@ -18,5 +19,7 @@ router.get('/me', getCurrentUser)
 router.delete('/delete/:id', deleteUser)
 
 router.patch('/update/:id', updateUser)
+
+router.get('/all-users', getAllUsersController)
 
 export const userRouter = router

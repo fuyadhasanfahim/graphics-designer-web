@@ -55,7 +55,51 @@ const getUserOrdersController = async (req: Request, res: Response) => {
     }
 }
 
+const getOrderByOrderId = async (req: Request, res: Response) => {
+    try {
+        const { orderID } = req.params
+
+        if (!orderID) {
+            return res.status(400).json({ error: 'Order ID is required' })
+        }
+
+        const order = await OrderServices.getOrderFromDBById(orderID)
+
+        if (!order) {
+            return res.status(404).json({ error: 'No order found for this ID' })
+        }
+
+        res.status(200).json({ order })
+    } catch (error) {
+        res.status(500).json({ error: (error as Error).message })
+    }
+}
+
+const updateOrder: RequestHandler = async (req, res) => {
+    const { orderId } = req.params
+    const orderData = req.body
+
+    try {
+        const updatedOrder = await OrderServices.updateOrderService(
+            orderId,
+            orderData,
+        )
+
+        if (!updatedOrder) {
+            return res.status(404).json({ message: 'Order not found' })
+        }
+
+        return res
+            .status(200)
+            .json({ message: 'Order updated successfully', updatedOrder })
+    } catch (error) {
+        return res.status(500).json({ message: (error as Error).message })
+    }
+}
+
 export const OrderControllers = {
     createOrderController,
     getUserOrdersController,
+    updateOrder,
+    getOrderByOrderId,
 }

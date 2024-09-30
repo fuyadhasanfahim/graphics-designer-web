@@ -24,10 +24,14 @@ export default function SignUpPage() {
             toast.success('Registration successful!');
 
             setTimeout(() => {
-                navigate('/');
+                navigate('/dashboard');
             }, 2000);
         } else if (error) {
-            toast.error((error as Error).message);
+            const errorMessage = (
+                error as unknown as { data: { message: string } }
+            ).data.message;
+
+            toast.error(errorMessage);
         }
     }, [data, error, navigate]);
 

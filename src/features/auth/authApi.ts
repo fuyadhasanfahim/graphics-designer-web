@@ -1,5 +1,5 @@
 import { apiSlice } from '../api/apiSlice';
-import { userLoggedIn, userLoggedOut } from './authSlice';
+import { getAllUsers, userLoggedIn, userLoggedOut } from './authSlice';
 import Cookies from 'js-cookie';
 
 export const authApi = apiSlice.injectEndpoints({
@@ -83,12 +83,32 @@ export const authApi = apiSlice.injectEndpoints({
             }),
             async onQueryStarted(_arg, { queryFulfilled, dispatch }) {
                 try {
-                    await queryFulfilled;
+                    const { data } = await queryFulfilled;
 
-                    Cookies.remove('accessToken');
-                    dispatch(userLoggedOut());
+                    if (data.message === 'Cannot delete a SuperAdmin user') {
+                        throw new Error('SuperAdmin users cannot be deleted!');
+                    } else {
+                        Cookies.remove('accessToken');
+                        dispatch(userLoggedOut());
+                    }
                 } catch (error) {
                     console.error('Error deleting user:', error);
+                }
+            },
+        }),
+        getAllUsers: builder.query({
+            query: () => ({
+                url: '/users/all-users',
+                method: 'GET',
+                credentials: 'include',
+            }),
+            async onQueryStarted(_arg, { queryFulfilled, dispatch }) {
+                try {
+                    const { data } = await queryFulfilled;
+
+                    dispatch(getAllUsers(data.users));
+                } catch (error) {
+                    console.error('Error fetching users:', error);
                 }
             },
         }),
@@ -100,4 +120,5 @@ export const {
     useLoginMutation,
     useFetchCurrentUserQuery,
     useDeleteUserMutation,
+    useGetAllUsersQuery,
 } = authApi;

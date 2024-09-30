@@ -22,7 +22,7 @@ export default function DashNav() {
     const location = useLocation();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-    const { name, username, email, profileImage } = user;
+    const { name, username, email, profileImage, role } = user;
 
     const handleSignOut = () => {
         dispatch(userLoggedOut());
@@ -45,13 +45,17 @@ export default function DashNav() {
                 </li>
                 <li>
                     <Link
-                        to={'/dashboard/create-order'}
+                        to={`${
+                            role === 'User'
+                                ? '/dashboard/create-order'
+                                : '/dashboard/users'
+                        }`}
                         className={`block rounded-lg px-4 py-2 text-sm font-medium text-gray-700 ${
                             location.pathname === '/dashboard/create-order' &&
                             'bg-gray-100'
                         }`}
                     >
-                        Create Order
+                        {role === 'User' ? 'Create Order' : 'Users'}
                     </Link>
                 </li>
                 <li>

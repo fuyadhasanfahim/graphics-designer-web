@@ -3,6 +3,7 @@ import axios from 'axios';
 import { ReactNode } from 'react';
 
 interface Order {
+    userId: string;
     status: ReactNode;
     _id: string;
     createdAt: string;
@@ -37,6 +38,17 @@ export const fetchUserOrders = createAsyncThunk(
     },
 );
 
+export const updateOrderStatus = createAsyncThunk(
+    'orders/updateOrderStatus',
+    async ({ userId, status }: { userId: string; status: string }) => {
+        const response = await axios.patch(
+            `http://localhost:5000/api/v1/orders/update-my-order/${userId}`,
+            { status },
+        );
+        return response.data;
+    },
+);
+
 const orderSlice = createSlice({
     name: 'orders',
     initialState,
@@ -61,6 +73,27 @@ const orderSlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message || 'Failed to fetch orders';
                 state.noOrdersFound = false;
+            })
+            .addCase(updateOrderStatus.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(updateOrderStatus.fulfilled, (state, action) => {
+                state.loading = false;
+                const index = state.orders.findIndex(
+                    (order) => order._id === action.payload._id,
+                );
+                if (index !== -1) {
+                    state.orders[index] = {
+                        ...state.orders[index],
+                        status: action.payload.status,
+                    };
+                }
+            })
+            .addCase(updateOrderStatus.rejected, (state, action) => {
+                state.loading = false;
+                state.error =
+                    action.error.message || 'Failed to update order status';
             });
     },
 });

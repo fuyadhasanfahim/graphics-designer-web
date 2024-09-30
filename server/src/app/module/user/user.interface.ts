@@ -11,6 +11,7 @@ interface IUser extends Document {
     phone: string
     password: string
     profileImage: string
+    role: string
     isDeleted: boolean
 }
 

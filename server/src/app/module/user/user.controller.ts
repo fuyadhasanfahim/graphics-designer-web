@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import {
     deleteUserById,
+    getAllUsers,
     getUserById,
     loginUser,
     registerUser,
@@ -19,7 +20,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     try {
         const user = await registerUser(req.body)
 
-        const accessToken = generateAccessToken(user._id)
+        const accessToken = generateAccessToken(user._id.toString())
 
         res.status(201).json({
             message: 'User registered successfully',
@@ -44,7 +45,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     try {
         const { user } = await loginUser(email, password)
 
-        const accessToken = generateAccessToken(user._id)
+        const accessToken = generateAccessToken(user._id.toString())
 
         res.status(200).json({
             message: 'Login successful',
@@ -113,5 +114,21 @@ export const updateUser = async (req: Request, res: Response) => {
             return res.status(400).json({ message: (error as Error).message })
         }
         return res.status(500).json({ message: (error as Error).message })
+    }
+}
+
+export const getAllUsersController = async (req: Request, res: Response) => {
+    try {
+        const users = await getAllUsers()
+
+        res.status(200).json({
+            success: true,
+            data: users,
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: (error as Error).message,
+        })
     }
 }

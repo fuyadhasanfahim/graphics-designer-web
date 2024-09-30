@@ -14,7 +14,33 @@ const getUserOrdersFromDB = async (userId: string) => {
     return orders
 }
 
+const getOrderFromDBById = async (orderID: string) => {
+    const order = await OrderModel.findById(orderID).exec()
+
+    if (!order) {
+        throw new Error('No order found for this ID')
+    }
+
+    return order
+}
+
+const updateOrderService = async (orderId: string, orderData: IOrder) => {
+    try {
+        const updatedOrder = await OrderModel.findOneAndUpdate(
+            { orderId },
+            { $set: orderData },
+            { new: true },
+        )
+
+        return updatedOrder
+    } catch (error) {
+        throw new Error((error as Error).message)
+    }
+}
+
 export const OrderServices = {
     createOrderIntoDB,
     getUserOrdersFromDB,
+    updateOrderService,
+    getOrderFromDBById,
 }

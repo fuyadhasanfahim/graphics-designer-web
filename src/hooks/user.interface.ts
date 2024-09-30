@@ -1,4 +1,5 @@
 export interface IUser extends Document {
+    role: string;
     _id: string;
     id: string;
     name: {
@@ -9,5 +10,6 @@ export interface IUser extends Document {
     email: string;
     phone: string;
     password: string;
+    createdAt: Date;
     profileImage: string;
 }

@@ -21,7 +21,9 @@ export default function LoginPage() {
                 navigate('/');
             }, 2000);
         } else if (error) {
-            const errorMessage = (error as Error).message;
+            const errorMessage = (
+                error as unknown as { data: { message: string } }
+            ).data.message;
             toast.error(errorMessage);
         }
     }, [data, error, navigate]);

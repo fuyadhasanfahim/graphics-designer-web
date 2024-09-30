@@ -87,13 +87,34 @@ export const getUserById = async (id: string) => {
 }
 
 export const deleteUserById = async (userId: string) => {
-    return await UserModel.findOneAndUpdate(
+    const user = await UserModel.findById(userId)
+
+    if (!user) {
+        throw new Error('User not found')
+    }
+
+    if (user.role === 'SuperAdmin') {
+        return { message: 'Cannot delete a SuperAdmin user' }
+    }
+
+    const updatedUser = await UserModel.findOneAndUpdate(
         { _id: userId },
         { isDeleted: true },
         { new: true },
     )
+
+    return updatedUser
 }
 
 export const updateUserById = async (userId: string, updatedUser: IUser) => {
     return await UserModel.findOneAndUpdate({ _id: userId }, updatedUser)
+}
+
+export const getAllUsers = async () => {
+    try {
+        const users = await UserModel.find({ role: { $ne: 'SuperAdmin' } })
+        return users
+    } catch (error) {
+        throw new Error((error as Error).message)
+    }
 }
