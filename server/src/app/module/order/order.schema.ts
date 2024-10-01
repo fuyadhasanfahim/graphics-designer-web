@@ -32,6 +32,7 @@ const OrderSchema = new Schema<OrderDocument>(
         },
         status: {
             type: String,
+            enum: ['Pending', 'In Progress', 'Completed', 'Cancelled'],
             default: 'Pending',
         },
         message: {

@@ -3,6 +3,7 @@ import {
     deleteUserById,
     getAllUsers,
     getUserById,
+    getUserFromDB,
     loginUser,
     registerUser,
     updateUserById,
@@ -80,6 +81,25 @@ export const getCurrentUser = async (req: Request, res: Response) => {
         res.status(200).json({ user })
     } catch (error) {
         res.status(400).json({ message: (error as Error).message })
+    }
+}
+
+export const getUser = async (req: Request, res: Response) => {
+    const { userId } = req.params
+
+    if (!userId) {
+        return res.status(400).json({ message: 'User ID is required' })
+    }
+
+    try {
+        const user = await getUserFromDB(userId)
+        res.status(200).json({ user })
+    } catch (error) {
+        // Handle specific error cases
+        if (error instanceof Error && error.message === 'User not found') {
+            return res.status(404).json({ message: error.message })
+        }
+        res.status(500).json({ message: 'Internal server error' })
     }
 }
 

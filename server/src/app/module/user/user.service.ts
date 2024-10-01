@@ -86,6 +86,14 @@ export const getUserById = async (id: string) => {
     return user
 }
 
+export const getUserFromDB = async (userId: string) => {
+    const user = await UserModel.findById(userId)
+    if (!user) {
+        throw new Error('User not found')
+    }
+    return user
+}
+
 export const deleteUserById = async (userId: string) => {
     const user = await UserModel.findById(userId)
 

@@ -77,12 +77,12 @@ const getOrderByOrderId = async (req: Request, res: Response) => {
 
 const updateOrder: RequestHandler = async (req, res) => {
     const { orderId } = req.params
-    const orderData = req.body
-
+    const {status} = req.body
+    
     try {
         const updatedOrder = await OrderServices.updateOrderService(
             orderId,
-            orderData,
+            status,
         )
 
         if (!updatedOrder) {
@@ -97,9 +97,28 @@ const updateOrder: RequestHandler = async (req, res) => {
     }
 }
 
+const getAllOrders: RequestHandler = async (req, res) => {
+    try {
+        const orders = await OrderServices.getAllOrdersFromDB()
+
+        res.status(200).json({
+            success: true,
+            message: 'Orders are retrieved successfully.',
+            data: orders,
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: (error as Error).message,
+            error,
+        })
+    }
+}
+
 export const OrderControllers = {
     createOrderController,
     getUserOrdersController,
     updateOrder,
     getOrderByOrderId,
+    getAllOrders,
 }
