@@ -36,28 +36,20 @@ export const setMessages = createAsyncThunk(
 export const getMessages = createAsyncThunk(
     'messages/getMessages',
     async (conversationId: string) => {
-        try {
-            const response = await axios.get(
-                `http://localhost:5000/api/v1/messages/get-message/${conversationId}`,
-            );
-            return response?.data?.messages;
-        } catch (error) {
-            console.log(error);
-        }
+        const response = await axios.get(
+            `http://localhost:5000/api/v1/messages/get-message/${conversationId}`,
+        );
+        return response?.data?.messages;
     },
 );
 
 export const getAllMessages = createAsyncThunk(
     'messages/getAllMessages',
     async () => {
-        try {
-            const response = await axios.get(
-                `http://localhost:5000/api/v1/messages/get-all-messages`,
-            );
-            return response?.data?.messages;
-        } catch (error) {
-            console.log(error);
-        }
+        const response = await axios.get(
+            `http://localhost:5000/api/v1/messages/get-all-messages`,
+        );
+        return response?.data?.messages;
     },
 );
 
@@ -67,6 +59,9 @@ const messagesSlice = createSlice({
     reducers: {
         addMessage: (state, action) => {
             state.messages.push(action.payload);
+        },
+        setLoading: (state, action) => {
+            state.loading = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -105,7 +100,9 @@ const messagesSlice = createSlice({
             })
             .addCase(getAllMessages.fulfilled, (state, action) => {
                 state.loading = false;
-                state.messages = action.payload;
+                if (action.payload) {
+                    state.messages = action.payload;
+                }
             })
             .addCase(getAllMessages.rejected, (state, action) => {
                 state.loading = false;
@@ -115,5 +112,5 @@ const messagesSlice = createSlice({
     },
 });
 
-export const { addMessage } = messagesSlice.actions;
+export const { addMessage, setLoading } = messagesSlice.actions;
 export default messagesSlice.reducer;

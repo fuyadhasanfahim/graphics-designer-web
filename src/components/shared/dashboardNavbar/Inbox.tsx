@@ -3,8 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import IMessage from '../../../hooks/message.Interface';
 import Message from './Message';
 import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { addMessage } from '../../../features/message/messageApi';
+import { useEffect, useRef } from 'react';
+import {
+    addMessage,
+    getAllMessages,
+} from '../../../features/message/messageApi';
+import { AppDispatch } from '../../../app/store';
 
 interface InboxProps {
     role: string;
@@ -12,7 +16,24 @@ interface InboxProps {
 }
 
 export default function Inbox({ role, messages }: InboxProps) {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
+    const messagesEndRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const fetchMessages = async () => {
+            await dispatch(getAllMessages());
+        };
+
+        fetchMessages();
+
+        const intervalId = setInterval(() => {
+            fetchMessages();
+        }, 1000);
+
+        return () => {
+            clearInterval(intervalId);
+        };
+    }, [dispatch]);
 
     useEffect(() => {
         const socket = new WebSocket('ws://localhost:5173/dashboard');
@@ -27,6 +48,12 @@ export default function Inbox({ role, messages }: InboxProps) {
         };
     }, [dispatch]);
 
+    useEffect(() => {
+        if (messagesEndRef.current) {
+            messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [messages]);
+
     const uniqueMessagesMap = new Map<string, IMessage>();
 
     messages.forEach((message) => {
@@ -40,7 +67,15 @@ export default function Inbox({ role, messages }: InboxProps) {
         }
     });
 
-    const uniqueMessages = Array.from(uniqueMessagesMap.values());
+    // Create an array from the unique messages map and sort it
+    const uniqueMessages = Array.from(uniqueMessagesMap.values()).sort(
+        (a, b) => {
+            return (
+                new Date(b.createdAt).getTime() -
+                new Date(a.createdAt).getTime()
+            ); // Latest first
+        },
+    );
 
     return (
         <li>
