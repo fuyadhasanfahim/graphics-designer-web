@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
-import { RootState } from '../../../app/store';
+import { AppDispatch, RootState } from '../../../app/store';
 import { IUser } from '../../../hooks/user.interface';
 import { Link, useLocation } from 'react-router-dom';
 import {
@@ -12,13 +12,16 @@ import {
 import { userLoggedOut } from '../../../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Dialog, DialogPanel } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { getAllMessages } from '../../../features/message/messageApi';
+import Inbox from './Inbox';
 
 export default function DashNav() {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const user = useSelector((state: RootState) => state.auth.user) as IUser;
+    const { messages } = useSelector((state: RootState) => state.messages);
     const location = useLocation();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -29,6 +32,18 @@ export default function DashNav() {
 
         Cookies.remove('accessToken');
     };
+
+    useEffect(() => {
+        const fetchAllMessages = async () => {
+            try {
+                dispatch(getAllMessages());
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchAllMessages();
+    }, [dispatch]);
 
     const navigationLinks = (
         <>
@@ -102,6 +117,7 @@ export default function DashNav() {
                         Customer Support
                     </Link>
                 </li>
+                <Inbox role={role} messages={messages} />
                 <li>
                     <details className="group [&_summary::-webkit-details-marker]:hidden">
                         <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">

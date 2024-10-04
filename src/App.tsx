@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navbar from './components/shared/navbar/Navbar';
 import HomePage from './pages/home/HomePage';
@@ -20,9 +20,34 @@ import DashAccountSettings from './pages/accountSettings/DashAccountSettings';
 import CreateOrder from './pages/create-order/CreateOrderPage';
 import CurrentOrders from './pages/currentOrders/CurrentOrdersPage';
 import UsersPage from './pages/admin/UsersPage';
+import ChatWindow from './components/chat/ChatWindow';
+import FloatingChatButton from './components/chat/FloatingChatButton';
+import { useSelector } from 'react-redux';
+import { RootState } from './app/store';
+import toast, { Toaster } from 'react-hot-toast';
 
-const App: React.FC = () => {
+const App = () => {
     const authChecked = useAuthCheck();
+    const [isChatOpen, setIsChatOpen] = useState(false);
+    const { user } = useSelector((state: RootState) => state.auth) || {};
+    const { role } = user || {};
+
+    const toggleChat = () => {
+        if (!authChecked) {
+            toast.error('Please log in to use the chat feature.');
+            return;
+        }
+        if (role === 'Admin' || role === 'SuperAdmin') {
+            toast.error('Only users can use this feature.');
+            return;
+        }
+        if (user) {
+            setIsChatOpen(!isChatOpen);
+        } else {
+            toast.error('Please sign in to access this feature.');
+            return;
+        }
+    };
 
     return (
         <>
@@ -37,6 +62,8 @@ const App: React.FC = () => {
             ) : (
                 <BrowserRouter>
                     <Navbar />
+                    {isChatOpen && <ChatWindow toggleChat={toggleChat} />}
+                    <FloatingChatButton toggleChat={toggleChat} />
                     <Routes>
                         <Route path="/" element={<HomePage />} />
                         <Route path="/home" element={<HomePage />} />
@@ -115,6 +142,7 @@ const App: React.FC = () => {
                         <Route path="*" element={<Error />} />
                     </Routes>
                     <Footer />
+                    <Toaster position="bottom-right" reverseOrder={false} />
                 </BrowserRouter>
             )}
         </>

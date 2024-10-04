@@ -1,5 +1,4 @@
 export interface IUser extends Document {
-    user(user: any): unknown;
     role: string;
     _id: string;
     id: string;
