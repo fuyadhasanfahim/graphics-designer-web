@@ -213,5 +213,5 @@ export default function FAQ() {
                 </div>
             </div>
         </>
-    );
+    )
 }

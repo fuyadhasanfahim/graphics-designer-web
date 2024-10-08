@@ -1,56 +1,56 @@
-import { useSelector } from 'react-redux';
-import { RootState } from '../../app/store';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
-import toast, { Toaster } from 'react-hot-toast';
-import { useDeleteUserMutation } from '../../features/auth/authApi';
-import { IUser } from '../../hooks/user.interface';
-import { useState } from 'react';
-import UpdateUserModal from '../../components/accountSettings/UpdateUserModal';
-import ConfirmationModal from '../../components/accountSettings/ConfirmationModal';
-import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux'
+import { RootState } from '../../app/store'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
+import toast, { Toaster } from 'react-hot-toast'
+import { useDeleteUserMutation } from '../../features/auth/authApi'
+import { IUser } from '../../hooks/user.interface'
+import { useState } from 'react'
+import UpdateUserModal from '../../components/accountSettings/UpdateUserModal'
+import ConfirmationModal from '../../components/accountSettings/ConfirmationModal'
+import { useLocation } from 'react-router-dom'
 
 const AccountSettings = () => {
-    const user = useSelector((state: RootState) => state.auth.user) as IUser;
-    const { name, email, username, profileImage } = user;
-    const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+    const user = useSelector((state: RootState) => state.auth.user) as IUser
+    const { name, email, username, profileImage } = user
+    const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
     const [isConfirmationModalOpen, setIsConfirmationModalOpen] =
-        useState(false);
-    const location = useLocation();
+        useState(false)
+    const location = useLocation()
 
-    const [deleteUser] = useDeleteUserMutation();
+    const [deleteUser] = useDeleteUserMutation()
 
     const handleDelete = async () => {
         try {
             if (user?._id) {
                 if (user?.role === 'SuperAdmin') {
-                    toast.error("SuperAdmin can't be deleted");
+                    toast.error("SuperAdmin can't be deleted")
                 } else {
                     try {
-                        await deleteUser(user._id).unwrap();
-                        toast.success('Account deleted successfully');
-                        setIsConfirmationModalOpen(false);
+                        await deleteUser(user._id).unwrap()
+                        toast.success('Account deleted successfully')
+                        setIsConfirmationModalOpen(false)
                     } catch (error) {
-                        toast.error('Error deleting the account');
-                        console.error('Error during deletion:', error);
+                        toast.error('Error deleting the account')
+                        console.error('Error during deletion:', error)
                     }
                 }
             } else {
-                toast.error('User ID is missing');
+                toast.error('User ID is missing')
             }
         } catch (error) {
-            toast.error('Failed to delete account');
-            console.error('Error deleting user:', error);
+            toast.error('Failed to delete account')
+            console.error('Error deleting user:', error)
         }
-    };
+    }
 
     const handleUpdateClick = () => {
-        setIsUpdateModalOpen(true);
-    };
+        setIsUpdateModalOpen(true)
+    }
 
     const openConfirmationModal = () => {
-        setIsConfirmationModalOpen(true);
-    };
+        setIsConfirmationModalOpen(true)
+    }
 
     return (
         <>
@@ -109,7 +109,7 @@ const AccountSettings = () => {
 
             <Toaster position="bottom-right" />
         </>
-    );
-};
+    )
+}
 
-export default AccountSettings;
+export default AccountSettings

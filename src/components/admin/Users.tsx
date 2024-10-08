@@ -1,24 +1,24 @@
-import { useGetAllUsersQuery } from '../../features/auth/authApi';
-import { IUser } from '../../hooks/user.interface';
-import { useState } from 'react';
-import UserInfoModal from './UserInfoModal';
+import { useGetAllUsersQuery } from '../../features/auth/authApi'
+import { IUser } from '../../hooks/user.interface'
+import { useState } from 'react'
+import UserInfoModal from './UserInfoModal'
 
 export default function Users() {
-    const { data: usersData } = useGetAllUsersQuery({});
-    const users = usersData?.data || [];
+    const { data: usersData } = useGetAllUsersQuery({})
+    const users = usersData?.data || []
 
-    const [isModalOpen, setModalOpen] = useState(false);
-    const [selectedUser, setSelectedUser] = useState({});
+    const [isModalOpen, setModalOpen] = useState(false)
+    const [selectedUser, setSelectedUser] = useState({})
 
     const handleViewClick = (user: IUser) => {
-        setSelectedUser(user);
-        setModalOpen(true);
-    };
+        setSelectedUser(user)
+        setModalOpen(true)
+    }
 
     const handleCloseModal = () => {
-        setModalOpen(false);
-        setSelectedUser({});
-    };
+        setModalOpen(false)
+        setSelectedUser({})
+    }
 
     return (
         <div className="h-dvh w-full max-w-7xl mx-auto my-20 px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
@@ -53,7 +53,7 @@ export default function Users() {
                                 email,
                                 role,
                                 createdAt,
-                            } = user;
+                            } = user
 
                             return (
                                 <tr key={_id}>
@@ -85,7 +85,7 @@ export default function Users() {
                                         </button>
                                     </td>
                                 </tr>
-                            );
+                            )
                         })}
                     </tbody>
                 </table>
@@ -97,5 +97,5 @@ export default function Users() {
                 user={selectedUser}
             />
         </div>
-    );
+    )
 }

@@ -1,24 +1,24 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import toast, { Toaster } from 'react-hot-toast';
-import IOrder from '../../hooks/order.interface';
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import toast, { Toaster } from 'react-hot-toast'
+import IOrder from '../../hooks/order.interface'
 
 interface Order {
-    order: IOrder;
-    _id: string;
-    serviceName: string;
-    status: string;
+    order: IOrder
+    _id: string
+    serviceName: string
+    status: string
 }
 
 interface EditStatusModalProps {
-    orderId: string;
-    isOpen: boolean;
-    onClose: () => void;
-    currentStatus: string;
-    onUpdate: (orderId: string, newStatus: string) => void;
+    orderId: string
+    isOpen: boolean
+    onClose: () => void
+    currentStatus: string
+    onUpdate: (orderId: string, newStatus: string) => void
 }
 
-const statusOptions = ['Pending', 'Started', 'Done', 'Cancelled'];
+const statusOptions = ['Pending', 'Started', 'Done', 'Cancelled']
 
 const EditStatusModal: React.FC<EditStatusModalProps> = ({
     orderId,
@@ -27,38 +27,38 @@ const EditStatusModal: React.FC<EditStatusModalProps> = ({
     currentStatus,
     onUpdate,
 }) => {
-    const [order, setOrder] = useState<Order | null>(null);
-    const [newStatus, setNewStatus] = useState(currentStatus);
-    const [loading, setLoading] = useState(true);
+    const [order, setOrder] = useState<Order | null>(null)
+    const [newStatus, setNewStatus] = useState(currentStatus)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         if (isOpen && orderId) {
             const fetchOrder = async () => {
                 try {
-                    setLoading(true);
+                    setLoading(true)
                     const response = await axios.get(
                         `http://localhost:5000/api/v1/orders/get-orders-by-order-id/${orderId}`,
-                    );
-                    setOrder(response.data);
+                    )
+                    setOrder(response.data)
                 } catch (err) {
-                    toast.error((err as Error).message);
+                    toast.error((err as Error).message)
                 } finally {
-                    setLoading(false);
+                    setLoading(false)
                 }
-            };
-            fetchOrder();
+            }
+            fetchOrder()
         }
-    }, [orderId, isOpen]);
+    }, [orderId, isOpen])
 
     const handleStatusChange = () => {
-        onUpdate(orderId, newStatus);
-        toast.success('Order updated successfully. Closing...');
+        onUpdate(orderId, newStatus)
+        toast.success('Order updated successfully. Closing...')
         setTimeout(() => {
-            onClose();
-        }, 2000);
-    };
+            onClose()
+        }, 2000)
+    }
 
-    if (!isOpen) return null;
+    if (!isOpen) return null
 
     return (
         <>
@@ -82,12 +82,10 @@ const EditStatusModal: React.FC<EditStatusModalProps> = ({
                                 <select
                                     id="status"
                                     value={order?.order.status}
-                                    onChange={(e) =>
-                                        setNewStatus(e.target.value)
-                                    }
+                                    onChange={e => setNewStatus(e.target.value)}
                                     className="mt-1 block w-full bg-white border-gray-300 border px2 py-1"
                                 >
-                                    {statusOptions.map((status) => (
+                                    {statusOptions.map(status => (
                                         <option key={status} value={status}>
                                             {status}
                                         </option>
@@ -116,7 +114,7 @@ const EditStatusModal: React.FC<EditStatusModalProps> = ({
 
             <Toaster position="bottom-right" reverseOrder={false} />
         </>
-    );
-};
+    )
+}
 
-export default EditStatusModal;
+export default EditStatusModal

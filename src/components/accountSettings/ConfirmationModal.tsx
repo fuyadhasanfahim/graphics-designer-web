@@ -1,7 +1,7 @@
 interface ConfirmationModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    onConfirm: () => void;
+    isOpen: boolean
+    onClose: () => void
+    onConfirm: () => void
 }
 
 export default function ConfirmationModal({
@@ -9,7 +9,7 @@ export default function ConfirmationModal({
     onClose,
     onConfirm,
 }: ConfirmationModalProps) {
-    if (!isOpen) return null;
+    if (!isOpen) return null
 
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50">
@@ -54,5 +54,5 @@ export default function ConfirmationModal({
                 </div>
             </div>
         </div>
-    );
+    )
 }

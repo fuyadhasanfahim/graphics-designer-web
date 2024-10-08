@@ -1,12 +1,12 @@
-import { useSelector } from 'react-redux';
-import { RootState } from '../app/store';
+import { useSelector } from 'react-redux'
+import { RootState } from '../app/store'
 
 export default function useAuth() {
-    const auth = useSelector((state: RootState) => state.auth);
+    const auth = useSelector((state: RootState) => state.auth)
 
     if (auth.accessToken && auth.user) {
-        return true;
+        return true
     } else {
-        return false;
+        return false
     }
 }

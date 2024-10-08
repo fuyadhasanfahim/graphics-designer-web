@@ -1,8 +1,8 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { apiSlice } from '../features/api/apiSlice';
-import authSliceReducer from '../features/auth/authSlice';
-import orderReducer from '../features/order/orderApi';
-import messagesReducer from '../features/message/messageApi';
+import { configureStore } from '@reduxjs/toolkit'
+import { apiSlice } from '../features/api/apiSlice'
+import authSliceReducer from '../features/auth/authSlice'
+import orderReducer from '../features/order/orderApi'
+import messagesReducer from '../features/message/messageApi'
 
 export const store = configureStore({
     reducer: {
@@ -12,9 +12,9 @@ export const store = configureStore({
         messages: messagesReducer,
     },
     devTools: process.env.NODE_ENV !== 'production',
-    middleware: (getDefaultMiddlewares) =>
+    middleware: getDefaultMiddlewares =>
         getDefaultMiddlewares().concat(apiSlice.middleware),
-});
+})
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch

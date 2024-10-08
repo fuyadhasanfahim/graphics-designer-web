@@ -1,7 +1,7 @@
-import chatImage from '../../assets/img/chatImage.png';
+import chatImage from '../../assets/img/chatImage.png'
 
 interface FloatingChatButtonProps {
-    toggleChat: () => void;
+    toggleChat: () => void
 }
 
 export default function FloatingChatButton({
@@ -14,5 +14,5 @@ export default function FloatingChatButton({
         >
             <img src={chatImage} alt={chatImage} className="w-6 md:w-10" />
         </button>
-    );
+    )
 }

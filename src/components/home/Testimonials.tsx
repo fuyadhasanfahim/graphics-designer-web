@@ -4,8 +4,8 @@ import {
     Slide,
     ButtonBack,
     ButtonNext,
-} from 'pure-react-carousel';
-import 'pure-react-carousel/dist/react-carousel.es.css';
+} from 'pure-react-carousel'
+import 'pure-react-carousel/dist/react-carousel.es.css'
 
 export default function Testimonials() {
     return (
@@ -148,5 +148,5 @@ export default function Testimonials() {
                 </CarouselProvider>
             </div>
         </div>
-    );
+    )
 }

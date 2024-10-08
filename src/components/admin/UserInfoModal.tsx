@@ -1,20 +1,20 @@
-import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { AppDispatch, RootState } from '../../app/store';
+import { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { AppDispatch, RootState } from '../../app/store'
 import {
     fetchUserOrders,
     updateOrderStatus,
-} from '../../features/order/orderApi';
-import { Link } from 'react-router-dom';
-import { IUser } from '../../hooks/user.interface';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faXmark } from '@fortawesome/free-solid-svg-icons';
-import EditStatusModal from './EditStatusModal';
+} from '../../features/order/orderApi'
+import { Link } from 'react-router-dom'
+import { IUser } from '../../hooks/user.interface'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit, faXmark } from '@fortawesome/free-solid-svg-icons'
+import EditStatusModal from './EditStatusModal'
 
 interface UserInfoModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    user: IUser;
+    isOpen: boolean
+    onClose: () => void
+    user: IUser
 }
 
 const UserInfoModal: React.FC<UserInfoModalProps> = ({
@@ -22,31 +22,31 @@ const UserInfoModal: React.FC<UserInfoModalProps> = ({
     onClose,
     user,
 }) => {
-    const dispatch = useDispatch<AppDispatch>();
-    const { _id } = user;
+    const dispatch = useDispatch<AppDispatch>()
+    const { _id } = user
 
-    const { orders } = useSelector((state: RootState) => state.order);
-    const [isEditModalOpen, setEditModalOpen] = useState(false);
-    const [currentOrderId, setCurrentOrderId] = useState('');
-    const [currentStatus, setCurrentStatus] = useState('');
+    const { orders } = useSelector((state: RootState) => state.order)
+    const [isEditModalOpen, setEditModalOpen] = useState(false)
+    const [currentOrderId, setCurrentOrderId] = useState('')
+    const [currentStatus, setCurrentStatus] = useState('')
 
     useEffect(() => {
         if (_id) {
-            dispatch(fetchUserOrders(_id));
+            dispatch(fetchUserOrders(_id))
         }
-    }, [_id, dispatch]);
+    }, [_id, dispatch])
 
     const handleEditClick = (orderId: string, status: string) => {
-        setCurrentOrderId(orderId);
-        setCurrentStatus(status);
-        setEditModalOpen(true);
-    };
+        setCurrentOrderId(orderId)
+        setCurrentStatus(status)
+        setEditModalOpen(true)
+    }
 
     const handleStatusUpdate = (userId: string, newStatus: string) => {
-        dispatch(updateOrderStatus({ userId, status: newStatus }));
-    };
+        dispatch(updateOrderStatus({ userId, status: newStatus }))
+    }
 
-    if (!isOpen) return null;
+    if (!isOpen) return null
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -90,7 +90,7 @@ const UserInfoModal: React.FC<UserInfoModalProps> = ({
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-black">
-                                    {orders.map((order) => (
+                                    {orders.map(order => (
                                         <tr key={order._id}>
                                             <td className="whitespace-nowrap border border-black text-center px-4 py-2 text-gray-700">
                                                 {new Date(
@@ -158,7 +158,7 @@ const UserInfoModal: React.FC<UserInfoModalProps> = ({
                 onUpdate={handleStatusUpdate}
             />
         </div>
-    );
-};
+    )
+}
 
-export default UserInfoModal;
+export default UserInfoModal

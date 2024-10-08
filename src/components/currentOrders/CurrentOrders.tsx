@@ -1,22 +1,22 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { AppDispatch, RootState } from '../../app/store';
-import { IUser } from '../../hooks/user.interface';
-import { fetchUserOrders } from '../../features/order/orderApi';
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { AppDispatch, RootState } from '../../app/store'
+import { IUser } from '../../hooks/user.interface'
+import { fetchUserOrders } from '../../features/order/orderApi'
+import { Link } from 'react-router-dom'
 
 export default function CurrentOrders() {
-    const dispatch = useDispatch<AppDispatch>();
-    const user = useSelector((state: RootState) => state.auth?.user) as IUser;
-    const { _id } = user;
+    const dispatch = useDispatch<AppDispatch>()
+    const user = useSelector((state: RootState) => state.auth?.user) as IUser
+    const { _id } = user
 
-    const { orders } = useSelector((state: RootState) => state.order);
+    const { orders } = useSelector((state: RootState) => state.order)
 
     useEffect(() => {
         if (_id) {
-            dispatch(fetchUserOrders(_id));
+            dispatch(fetchUserOrders(_id))
         }
-    }, [_id, dispatch]);
+    }, [_id, dispatch])
 
     return (
         <>
@@ -50,7 +50,7 @@ export default function CurrentOrders() {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-black">
-                                {orders.map((order) => (
+                                {orders.map(order => (
                                     <tr key={order._id}>
                                         <td className="whitespace-nowrap border border-black text-center px-4 py-2 text-gray-700">
                                             {new Date(
@@ -96,5 +96,5 @@ export default function CurrentOrders() {
                 </div>
             </div>
         </>
-    );
+    )
 }

@@ -1,21 +1,21 @@
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
+import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
 
 interface Sender {
-    userId: string;
+    userId: string
     name: {
-        firstName: string;
-        lastName: string;
-    };
-    email: string;
-    profileImage: string;
+        firstName: string
+        lastName: string
+    }
+    email: string
+    profileImage: string
 }
 
 interface MessageProps {
-    conversationId: string;
-    createdAt: Date;
-    content: string;
-    sender: Sender;
+    conversationId: string
+    createdAt: Date
+    content: string
+    sender: Sender
 }
 
 export default function Message({
@@ -27,10 +27,10 @@ export default function Message({
     const currentTime = new Date(createdAt).toLocaleTimeString([], {
         hour: '2-digit',
         minute: '2-digit',
-    });
-    useEffect(() => {}, []);
+    })
+    useEffect(() => {}, [])
 
-    console.log(conversationId);
+    console.log(conversationId)
 
     return (
         <li>
@@ -53,5 +53,5 @@ export default function Message({
                 </div>
             </Link>
         </li>
-    );
+    )
 }

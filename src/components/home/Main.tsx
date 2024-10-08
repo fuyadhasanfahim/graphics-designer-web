@@ -1,7 +1,7 @@
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from 'react-router-dom';
-import ClippingPathServiceImage from '../../assets/img/Clipping-Path-Service.png';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Link } from 'react-router-dom'
+import ClippingPathServiceImage from '../../assets/img/Clipping-Path-Service.png'
 
 export default function Main() {
     return (
@@ -92,5 +92,5 @@ export default function Main() {
                 </div>
             </div>
         </>
-    );
+    )
 }

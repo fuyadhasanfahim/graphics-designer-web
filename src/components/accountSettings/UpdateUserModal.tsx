@@ -1,34 +1,34 @@
-import { useState } from 'react';
-import axios from 'axios'; // Import Axios
-import { IUser } from '../../hooks/user.interface';
-import toast from 'react-hot-toast';
-import PhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/lib/style.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react'
+import axios from 'axios' // Import Axios
+import { IUser } from '../../hooks/user.interface'
+import toast from 'react-hot-toast'
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
 interface UpdateUserModalProps {
-    user: IUser;
-    setIsModalOpen: (isOpen: boolean) => void;
+    user: IUser
+    setIsModalOpen: (isOpen: boolean) => void
 }
 
 const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
     user,
     setIsModalOpen,
 }) => {
-    const [firstName, setFirstName] = useState(user.name.firstName);
-    const [lastName, setLastName] = useState(user.name.lastName);
-    const [username, setUsername] = useState(user.username);
-    const [email, setEmail] = useState(user.email);
-    const [phone, setPhone] = useState(user.phone);
-    const [password, setPassword] = useState('');
-    const [profileImage, setProfileImage] = useState(user.profileImage);
-    const [showPassword, setShowPassword] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    const [firstName, setFirstName] = useState(user.name.firstName)
+    const [lastName, setLastName] = useState(user.name.lastName)
+    const [username, setUsername] = useState(user.username)
+    const [email, setEmail] = useState(user.email)
+    const [phone, setPhone] = useState(user.phone)
+    const [password, setPassword] = useState('')
+    const [profileImage, setProfileImage] = useState(user.profileImage)
+    const [showPassword, setShowPassword] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        setIsLoading(true);
+        e.preventDefault()
+        setIsLoading(true)
 
         const updatedUser = {
             name: { firstName, lastName },
@@ -36,10 +36,10 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
             email,
             phone,
             profileImage,
-        } as IUser;
+        } as IUser
 
         if (password.trim()) {
-            updatedUser.password = password;
+            updatedUser.password = password
         }
 
         try {
@@ -47,22 +47,22 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
                 await axios.patch(
                     `http://localhost:5000/api/v1/users/update/${user._id}`,
                     updatedUser,
-                );
-                toast.success('User updated successfully');
-                setIsModalOpen(false);
+                )
+                toast.success('User updated successfully')
+                setIsModalOpen(false)
 
-                window.location.reload();
+                window.location.reload()
             }
         } catch (error) {
-            toast.error((error as Error).message);
+            toast.error((error as Error).message)
         } finally {
-            setIsLoading(false);
+            setIsLoading(false)
         }
-    };
+    }
 
     const handleCancel = () => {
-        setIsModalOpen(false);
-    };
+        setIsModalOpen(false)
+    }
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
@@ -85,7 +85,7 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
                         className="w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm bg-transparent"
                         placeholder="Enter first name"
                         value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
+                        onChange={e => setFirstName(e.target.value)}
                     />
                 </div>
 
@@ -100,7 +100,7 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
                         className="w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm bg-transparent"
                         placeholder="Enter last name"
                         value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
+                        onChange={e => setLastName(e.target.value)}
                     />
                 </div>
 
@@ -115,7 +115,7 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
                         className="w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm bg-transparent"
                         placeholder="Enter username"
                         value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        onChange={e => setUsername(e.target.value)}
                     />
                 </div>
 
@@ -130,7 +130,7 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
                         className="w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm bg-transparent"
                         placeholder="Enter email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={e => setEmail(e.target.value)}
                     />
                 </div>
 
@@ -141,7 +141,7 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
                     <PhoneInput
                         country={'bd'}
                         value={phone}
-                        onChange={(phone) => setPhone(phone)}
+                        onChange={phone => setPhone(phone)}
                         inputProps={{
                             id: 'phone',
                             name: 'phone',
@@ -162,7 +162,7 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
                             className="w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm bg-transparent"
                             placeholder="Enter password"
                             value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={e => setPassword(e.target.value)}
                         />
                         <button
                             type="button"
@@ -187,7 +187,7 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
                         className="w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm bg-transparent"
                         placeholder="Enter profile image URL"
                         value={profileImage}
-                        onChange={(e) => setProfileImage(e.target.value)}
+                        onChange={e => setProfileImage(e.target.value)}
                     />
                 </div>
 
@@ -209,7 +209,7 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
                 </div>
             </form>
         </div>
-    );
-};
+    )
+}
 
-export default UpdateUserModal;
+export default UpdateUserModal

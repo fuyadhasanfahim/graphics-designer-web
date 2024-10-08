@@ -1,9 +1,9 @@
-import axios from 'axios';
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../app/store';
-import { IUser } from '../../hooks/user.interface';
-import toast, { Toaster } from 'react-hot-toast';
+import axios from 'axios'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../app/store'
+import { IUser } from '../../hooks/user.interface'
+import toast, { Toaster } from 'react-hot-toast'
 
 const services = [
     { id: 1, name: 'eCommerce Product Photo Editing' },
@@ -13,26 +13,26 @@ const services = [
     { id: 5, name: 'Photo Retouching Service' },
     { id: 6, name: 'Shadow Creation Service' },
     { id: 7, name: 'Color Correction Service' },
-];
+]
 
 export default function CreateOrder() {
-    const user = useSelector((state: RootState) => state.auth?.user) as IUser;
-    const [selectedService, setSelectedService] = useState<string>('');
-    const [fileFormat, setFileFormat] = useState('');
-    const [background, setBackground] = useState('');
-    const [path, setPath] = useState('');
-    const [driveLink, setDriveLink] = useState('');
-    const [message, setMessage] = useState('');
+    const user = useSelector((state: RootState) => state.auth?.user) as IUser
+    const [selectedService, setSelectedService] = useState<string>('')
+    const [fileFormat, setFileFormat] = useState('')
+    const [background, setBackground] = useState('')
+    const [path, setPath] = useState('')
+    const [driveLink, setDriveLink] = useState('')
+    const [message, setMessage] = useState('')
 
     const handleCheckboxChange = (
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
-        const { value } = event.target;
-        setSelectedService(value);
-    };
+        const { value } = event.target
+        setSelectedService(value)
+    }
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+        event.preventDefault()
         try {
             const formData = {
                 serviceName: selectedService,
@@ -41,32 +41,34 @@ export default function CreateOrder() {
                 path,
                 driveLink,
                 message,
-            };
+            }
 
             const response = await axios.post(
                 `http://localhost:5000/api/v1/orders/create-order/${
                     user?._id || user?.id
                 }`,
                 formData,
-            );
+            )
 
             if (response.status === 201) {
-                toast.success('Order created successfully. Redirecting to dashboard...');
+                toast.success(
+                    'Order created successfully. Redirecting to dashboard...',
+                )
 
                 setTimeout(() => {
-                    window.location.replace("/dashboard")
-                }, 2000);
+                    window.location.replace('/dashboard')
+                }, 2000)
             } else {
-                toast.error('Error creating order.');
+                toast.error('Error creating order.')
             }
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                toast.error(error.response?.data.message);
+                toast.error(error.response?.data.message)
             } else {
-                toast.error('An unexpected error occurred.');
+                toast.error('An unexpected error occurred.')
             }
         }
-    };
+    }
 
     return (
         <>
@@ -89,7 +91,7 @@ export default function CreateOrder() {
 
                                     <div className="mt-6 space-y-6">
                                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5 items-center">
-                                            {services.map((service) => (
+                                            {services.map(service => (
                                                 <div
                                                     key={service.id}
                                                     className="relative flex gap-x-3 mb-2"
@@ -136,7 +138,7 @@ export default function CreateOrder() {
                                                     id="file-format"
                                                     name="fileFormat"
                                                     value={fileFormat}
-                                                    onChange={(e) =>
+                                                    onChange={e =>
                                                         setFileFormat(
                                                             e.target.value,
                                                         )
@@ -163,7 +165,7 @@ export default function CreateOrder() {
                                                     id="background"
                                                     name="background"
                                                     value={background}
-                                                    onChange={(e) =>
+                                                    onChange={e =>
                                                         setBackground(
                                                             e.target.value,
                                                         )
@@ -190,7 +192,7 @@ export default function CreateOrder() {
                                                     id="path"
                                                     name="path"
                                                     value={path}
-                                                    onChange={(e) =>
+                                                    onChange={e =>
                                                         setPath(e.target.value)
                                                     }
                                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:max-w-xs sm:text-sm sm:leading-6 bg-white"
@@ -235,7 +237,7 @@ export default function CreateOrder() {
                                                         type="text"
                                                         placeholder="Enter your link"
                                                         value={driveLink}
-                                                        onChange={(e) =>
+                                                        onChange={e =>
                                                             setDriveLink(
                                                                 e.target.value,
                                                             )
@@ -264,7 +266,7 @@ export default function CreateOrder() {
                                         name="message"
                                         rows={4}
                                         value={message}
-                                        onChange={(e) =>
+                                        onChange={e =>
                                             setMessage(e.target.value)
                                         }
                                         className="block w-full rounded-md border-0 bg-white py-1.5 text-gray-900 placeholder:text-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
@@ -287,5 +289,5 @@ export default function CreateOrder() {
                 <Toaster position="bottom-right" reverseOrder={false} />;
             </div>
         </>
-    );
+    )
 }

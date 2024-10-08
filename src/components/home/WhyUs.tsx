@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import WhyUsImage from '../../assets/img/Quality-Images-Ready-To-Use-.png';
+import { Link } from 'react-router-dom'
+import WhyUsImage from '../../assets/img/Quality-Images-Ready-To-Use-.png'
 
 export default function WhyUs() {
     return (
@@ -116,5 +116,5 @@ export default function WhyUs() {
                 </button>
             </div>
         </>
-    );
+    )
 }

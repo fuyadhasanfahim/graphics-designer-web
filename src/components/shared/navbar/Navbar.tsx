@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from 'react'
 import {
     Dialog,
     DialogPanel,
@@ -9,24 +9,24 @@ import {
     PopoverButton,
     PopoverGroup,
     PopoverPanel,
-} from '@headlessui/react';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { ChevronDownIcon } from '@heroicons/react/20/solid';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+} from '@headlessui/react'
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
     faFolder,
     faGear,
     faSignIn,
     faSignOut,
-} from '@fortawesome/free-solid-svg-icons';
-import { useDispatch } from 'react-redux';
-import { userLoggedOut } from '../../../features/auth/authSlice';
-import Cookies from 'js-cookie';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../app/store';
-import Prover from '../../accountSettings/Prover';
-import { IUser } from '../../../hooks/user.interface';
+} from '@fortawesome/free-solid-svg-icons'
+import { useDispatch } from 'react-redux'
+import { userLoggedOut } from '../../../features/auth/authSlice'
+import Cookies from 'js-cookie'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../../app/store'
+import Prover from '../../accountSettings/Prover'
+import { IUser } from '../../../hooks/user.interface'
 
 const services = [
     {
@@ -57,20 +57,19 @@ const services = [
         name: 'Color Correction Service',
         href: 'color-correction-service',
     },
-];
+]
 
 export default function Navbar() {
-    const dispatch = useDispatch();
-    const user = useSelector((state: RootState) => state.auth?.user) as IUser;
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const dispatch = useDispatch()
+    const user = useSelector((state: RootState) => state.auth?.user) as IUser
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     // const authChecked = useAuth();
 
-
     const handleSignOut = () => {
-        dispatch(userLoggedOut());
+        dispatch(userLoggedOut())
 
-        Cookies.remove('accessToken');
-    };
+        Cookies.remove('accessToken')
+    }
 
     return (
         <header className="bg-white border-b">
@@ -118,7 +117,7 @@ export default function Navbar() {
                             className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-sm overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5 transition data-[closed]:translate-y-1 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
                         >
                             <div className="p-4">
-                                {services.map((item) => (
+                                {services.map(item => (
                                     <div
                                         key={item.name}
                                         className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
@@ -224,7 +223,7 @@ export default function Navbar() {
                                         />
                                     </DisclosureButton>
                                     <DisclosurePanel className="mt-2 space-y-2">
-                                        {services.map((item) => (
+                                        {services.map(item => (
                                             <DisclosureButton
                                                 key={item.name}
                                                 as="a"
@@ -351,5 +350,5 @@ export default function Navbar() {
                 </DialogPanel>
             </Dialog>
         </header>
-    );
+    )
 }

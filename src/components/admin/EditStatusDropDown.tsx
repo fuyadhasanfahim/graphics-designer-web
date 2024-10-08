@@ -1,11 +1,11 @@
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import {
     ArchiveBoxXMarkIcon,
     ChevronDownIcon,
     PencilIcon,
     Square2StackIcon,
     TrashIcon,
-} from '@heroicons/react/16/solid';
+} from '@heroicons/react/16/solid'
 
 export default function EditStatusDropDown() {
     return (
@@ -61,5 +61,5 @@ export default function EditStatusDropDown() {
                 </MenuItems>
             </Menu>
         </div>
-    );
+    )
 }

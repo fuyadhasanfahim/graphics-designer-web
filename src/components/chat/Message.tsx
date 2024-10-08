@@ -1,7 +1,7 @@
 interface IMessageProps {
-    justify: string;
-    message: string;
-    createdAt: Date;
+    justify: string
+    message: string
+    createdAt: Date
 }
 
 export default function Message({
@@ -12,7 +12,7 @@ export default function Message({
     const currentTime = new Date(createdAt).toLocaleTimeString([], {
         hour: '2-digit',
         minute: '2-digit',
-    });
+    })
 
     return (
         <div
@@ -33,5 +33,5 @@ export default function Message({
                 </span>
             </div>
         </div>
-    );
+    )
 }

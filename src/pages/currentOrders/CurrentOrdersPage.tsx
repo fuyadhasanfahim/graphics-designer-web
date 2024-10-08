@@ -1,5 +1,5 @@
-import CurrentOrders from '../../components/currentOrders/CurrentOrders';
-import DashNav from '../../components/shared/dashboardNavbar/DashNav';
+import CurrentOrders from '../../components/currentOrders/CurrentOrders'
+import DashNav from '../../components/shared/dashboardNavbar/DashNav'
 
 export default function CurrentOrdersPage() {
     return (
@@ -9,5 +9,5 @@ export default function CurrentOrdersPage() {
                 <CurrentOrders />
             </div>
         </>
-    );
+    )
 }

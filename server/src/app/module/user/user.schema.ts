@@ -9,13 +9,13 @@ const userSchema = new Schema<IUser>(
             auto: true,
         },
         name: {
-            firstName: { type: String, required: true },
-            lastName: { type: String, required: true },
+            firstName: { type: String },
+            lastName: { type: String },
         },
         username: { type: String, required: true, unique: true },
         email: { type: String, required: true, unique: true },
-        phone: { type: String, required: true },
-        password: { type: String, required: true },
+        phone: { type: String },
+        password: { type: String },
         profileImage: {
             type: String,
             default: 'https://i.ibb.co.com/7nxJWyv/download.png',

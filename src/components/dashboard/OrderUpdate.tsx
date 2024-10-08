@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
-import axios from 'axios';
-import toast, { Toaster } from 'react-hot-toast';
-import IOrder from '../../hooks/order.interface';
-import { IUser } from '../../hooks/user.interface';
+import React, { useEffect } from 'react'
+import axios from 'axios'
+import toast, { Toaster } from 'react-hot-toast'
+import IOrder from '../../hooks/order.interface'
+import { IUser } from '../../hooks/user.interface'
 
 interface OrderUpdateProps {
-    isOpen: boolean;
-    order: IOrder;
-    onClose: () => void;
-    userId: string;
+    isOpen: boolean
+    order: IOrder
+    onClose: () => void
+    userId: string
 }
 
 const OrderUpdate: React.FC<OrderUpdateProps> = ({
@@ -17,65 +17,65 @@ const OrderUpdate: React.FC<OrderUpdateProps> = ({
     onClose,
     userId,
 }) => {
-    const [userInfo, setUserInfo] = React.useState<IUser | null>(null);
-    const [loading, setLoading] = React.useState<boolean>(true);
-    const [error, setError] = React.useState<string | null>(null);
-    const [status, setStatus] = React.useState<string>(order.status as string);
+    const [userInfo, setUserInfo] = React.useState<IUser | null>(null)
+    const [loading, setLoading] = React.useState<boolean>(true)
+    const [error, setError] = React.useState<string | null>(null)
+    const [status, setStatus] = React.useState<string>(order.status as string)
 
     useEffect(() => {
         const getUserInfo = async (userId: string) => {
             try {
                 const response = await axios.get<IUser>(
                     `http://localhost:5000/api/v1/users/get-user/${userId}`,
-                );
+                )
 
-                setUserInfo(response.data.user as unknown as IUser);
-                setLoading(false);
+                setUserInfo(response.data.user as unknown as IUser)
+                setLoading(false)
             } catch (error) {
-                console.error(error);
-                setError('Failed to fetch user information.');
-                setLoading(false);
+                console.error(error)
+                setError('Failed to fetch user information.')
+                setLoading(false)
             }
-        };
+        }
 
         if (userId) {
-            getUserInfo(userId);
+            getUserInfo(userId)
         }
-    }, [userId]);
+    }, [userId])
 
     const handleStatusChange = (
         event: React.ChangeEvent<HTMLSelectElement>,
     ) => {
-        setStatus(event.target.value);
-    };
+        setStatus(event.target.value)
+    }
 
     const handleStatusUpdate = async () => {
-        console.log(order._id);
+        console.log(order._id)
         try {
             const response = await axios.patch(
                 `http://localhost:5000/api/v1/orders/update-my-order/${order._id}`,
                 { status },
-            );
-            console.log(status);
+            )
+            console.log(status)
 
             if (response.data) {
-                toast.success('Order updated successfully. Closing...');
+                toast.success('Order updated successfully. Closing...')
 
                 setTimeout(() => {
-                    onClose();
+                    onClose()
 
-                    window.location.reload();
-                }, 2000);
+                    window.location.reload()
+                }, 2000)
             } else {
-                toast.error('Failed to update order.');
+                toast.error('Failed to update order.')
             }
         } catch (error) {
-            toast.error('Failed to update order status.');
-            console.error('Error updating order:', error);
+            toast.error('Failed to update order status.')
+            console.error('Error updating order:', error)
         }
-    };
+    }
 
-    if (!isOpen) return null;
+    if (!isOpen) return null
 
     return (
         <>
@@ -177,7 +177,7 @@ const OrderUpdate: React.FC<OrderUpdateProps> = ({
 
             <Toaster position="bottom-right" reverseOrder={false} />
         </>
-    );
-};
+    )
+}
 
-export default OrderUpdate;
+export default OrderUpdate

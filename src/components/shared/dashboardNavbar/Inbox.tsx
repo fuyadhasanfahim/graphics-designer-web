@@ -1,71 +1,71 @@
-import { faInbox } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import IMessage from '../../../hooks/message.Interface';
-import Message from './Message';
-import { useDispatch } from 'react-redux';
-import { useEffect, useRef } from 'react';
+import { faInbox } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import IMessage from '../../../hooks/message.Interface'
+import Message from './Message'
+import { useDispatch } from 'react-redux'
+import { useEffect, useRef } from 'react'
 import {
     addMessage,
     getAllMessages,
-} from '../../../features/message/messageApi';
-import { AppDispatch } from '../../../app/store';
+} from '../../../features/message/messageApi'
+import { AppDispatch } from '../../../app/store'
 
 interface InboxProps {
-    role: string;
-    messages: IMessage[];
+    role: string
+    messages: IMessage[]
 }
 
 export default function Inbox({ role, messages }: InboxProps) {
-    const dispatch = useDispatch<AppDispatch>();
-    const messagesEndRef = useRef<HTMLDivElement>(null);
+    const dispatch = useDispatch<AppDispatch>()
+    const messagesEndRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         const fetchMessages = async () => {
-            await dispatch(getAllMessages());
-        };
+            await dispatch(getAllMessages())
+        }
 
-        fetchMessages();
+        fetchMessages()
 
         const intervalId = setInterval(() => {
-            fetchMessages();
-        }, 1000);
+            fetchMessages()
+        }, 1000)
 
         return () => {
-            clearInterval(intervalId);
-        };
-    }, [dispatch]);
+            clearInterval(intervalId)
+        }
+    }, [dispatch])
 
     useEffect(() => {
-        const socket = new WebSocket('ws://localhost:5173/dashboard');
+        const socket = new WebSocket('ws://localhost:5173/dashboard')
 
-        socket.onmessage = (event) => {
-            const newMessage: IMessage = JSON.parse(event.data);
-            dispatch(addMessage(newMessage));
-        };
+        socket.onmessage = event => {
+            const newMessage: IMessage = JSON.parse(event.data)
+            dispatch(addMessage(newMessage))
+        }
 
         return () => {
-            socket.close();
-        };
-    }, [dispatch]);
+            socket.close()
+        }
+    }, [dispatch])
 
     useEffect(() => {
         if (messagesEndRef.current) {
-            messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+            messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
         }
-    }, [messages]);
+    }, [messages])
 
-    const uniqueMessagesMap = new Map<string, IMessage>();
+    const uniqueMessagesMap = new Map<string, IMessage>()
 
-    messages.forEach((message) => {
-        const existingMessage = uniqueMessagesMap.get(message.conversationId);
+    messages.forEach(message => {
+        const existingMessage = uniqueMessagesMap.get(message.conversationId)
 
         if (
             !existingMessage ||
             new Date(message.createdAt) > new Date(existingMessage.createdAt)
         ) {
-            uniqueMessagesMap.set(message.conversationId, message);
+            uniqueMessagesMap.set(message.conversationId, message)
         }
-    });
+    })
 
     // Create an array from the unique messages map and sort it
     const uniqueMessages = Array.from(uniqueMessagesMap.values()).sort(
@@ -73,9 +73,9 @@ export default function Inbox({ role, messages }: InboxProps) {
             return (
                 new Date(b.createdAt).getTime() -
                 new Date(a.createdAt).getTime()
-            ); // Latest first
+            ) // Latest first
         },
-    );
+    )
 
     return (
         <li>
@@ -126,5 +126,5 @@ export default function Inbox({ role, messages }: InboxProps) {
                 </details>
             )}
         </li>
-    );
+    )
 }

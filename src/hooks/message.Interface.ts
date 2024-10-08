@@ -1,17 +1,17 @@
 interface IMessage {
-    conversationId: string;
+    conversationId: string
     sender: {
-        userId: string;
+        userId: string
         name: {
-            firstName: string;
-            lastName: string;
-        };
-        email: string;
-        profileImage: string;
-    };
-    message: string;
-    createdAt: Date;
-    updatedAt: Date;
+            firstName: string
+            lastName: string
+        }
+        email: string
+        profileImage: string
+    }
+    message: string
+    createdAt: Date
+    updatedAt: Date
 }
 
-export default IMessage;
+export default IMessage

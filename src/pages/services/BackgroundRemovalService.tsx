@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 export default function BackgroundRemovalService() {
     return (
@@ -779,5 +779,5 @@ export default function BackgroundRemovalService() {
                 </div>
             </div>
         </>
-    );
+    )
 }

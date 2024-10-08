@@ -1,4 +1,4 @@
-import CarouselSlider from '../../components/portfolio/Carousel';
+import CarouselSlider from '../../components/portfolio/Carousel'
 
 export default function PortfolioPage() {
     return (
@@ -42,5 +42,5 @@ export default function PortfolioPage() {
                 </div>
             </div>
         </>
-    );
+    )
 }

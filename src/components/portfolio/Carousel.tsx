@@ -1,92 +1,92 @@
-import { useEffect } from 'react';
+import { useEffect } from 'react'
 
 export default function CarouselSlider() {
     useEffect(() => {
         const interval = setInterval(() => {
-            const carousel = document.getElementById('carouselExampleCaptions');
+            const carousel = document.getElementById('carouselExampleCaptions')
             if (carousel) {
                 const activeItem = carousel.querySelector(
                     '[data-te-carousel-item].block',
-                ) as HTMLElement | null; // Assert type for clarity
+                ) as HTMLElement | null // Assert type for clarity
                 let nextItem =
-                    activeItem?.nextElementSibling as HTMLElement | null;
+                    activeItem?.nextElementSibling as HTMLElement | null
 
                 if (!nextItem) {
                     nextItem = carousel.querySelector(
                         '[data-te-carousel-item]:first-child',
-                    ) as HTMLElement | null;
+                    ) as HTMLElement | null
                 }
 
                 if (activeItem) {
                     // Check if activeItem is not null
-                    activeItem.classList.remove('block');
-                    activeItem.classList.add('hidden');
+                    activeItem.classList.remove('block')
+                    activeItem.classList.add('hidden')
                 }
                 if (nextItem) {
                     // Check if nextItem is not null
-                    nextItem.classList.add('block');
-                    nextItem.classList.remove('hidden');
+                    nextItem.classList.add('block')
+                    nextItem.classList.remove('hidden')
                 }
             }
-        }, 3000);
+        }, 3000)
 
-        return () => clearInterval(interval);
-    }, []);
+        return () => clearInterval(interval)
+    }, [])
 
     const handlePrev = () => {
-        const carousel = document.getElementById('carouselExampleCaptions');
+        const carousel = document.getElementById('carouselExampleCaptions')
         if (carousel) {
             const activeItem = carousel.querySelector(
                 '[data-te-carousel-item].block',
-            ) as HTMLElement | null;
+            ) as HTMLElement | null
             let prevItem =
-                activeItem?.previousElementSibling as HTMLElement | null;
+                activeItem?.previousElementSibling as HTMLElement | null
 
             if (!prevItem) {
                 prevItem = carousel.querySelector(
                     '[data-te-carousel-item]:last-child',
-                ) as HTMLElement | null;
+                ) as HTMLElement | null
             }
 
             if (activeItem) {
                 // Check if activeItem is not null
-                activeItem.classList.remove('block');
-                activeItem.classList.add('hidden');
+                activeItem.classList.remove('block')
+                activeItem.classList.add('hidden')
             }
             if (prevItem) {
                 // Check if prevItem is not null
-                prevItem.classList.add('block');
-                prevItem.classList.remove('hidden');
+                prevItem.classList.add('block')
+                prevItem.classList.remove('hidden')
             }
         }
-    };
+    }
 
     const handleNext = () => {
-        const carousel = document.getElementById('carouselExampleCaptions');
+        const carousel = document.getElementById('carouselExampleCaptions')
         if (carousel) {
             const activeItem = carousel.querySelector(
                 '[data-te-carousel-item].block',
-            ) as HTMLElement | null;
-            let nextItem = activeItem?.nextElementSibling as HTMLElement | null;
+            ) as HTMLElement | null
+            let nextItem = activeItem?.nextElementSibling as HTMLElement | null
 
             if (!nextItem) {
                 nextItem = carousel.querySelector(
                     '[data-te-carousel-item]:first-child',
-                ) as HTMLElement | null;
+                ) as HTMLElement | null
             }
 
             if (activeItem) {
                 // Check if activeItem is not null
-                activeItem.classList.remove('block');
-                activeItem.classList.add('hidden');
+                activeItem.classList.remove('block')
+                activeItem.classList.add('hidden')
             }
             if (nextItem) {
                 // Check if nextItem is not null
-                nextItem.classList.add('block');
-                nextItem.classList.remove('hidden');
+                nextItem.classList.add('block')
+                nextItem.classList.remove('hidden')
             }
         }
-    };
+    }
 
     return (
         <div
@@ -213,5 +213,5 @@ export default function CarouselSlider() {
                 </span>
             </button>
         </div>
-    );
+    )
 }

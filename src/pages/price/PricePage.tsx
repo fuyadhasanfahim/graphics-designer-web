@@ -1,4 +1,4 @@
-import PhotoEditing from '../../assets/img/Photo-editing-prices-by-Clipping-Path-Studio-1.png';
+import PhotoEditing from '../../assets/img/Photo-editing-prices-by-Clipping-Path-Studio-1.png'
 
 export default function PricePage() {
     return (
@@ -553,5 +553,5 @@ export default function PricePage() {
                 </div>
             </div>
         </>
-    );
+    )
 }

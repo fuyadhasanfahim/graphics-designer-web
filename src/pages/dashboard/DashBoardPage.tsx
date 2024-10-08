@@ -1,5 +1,5 @@
-import Dashboard from '../../components/dashboard/Dashboard';
-import DashNav from '../../components/shared/dashboardNavbar/DashNav';
+import Dashboard from '../../components/dashboard/Dashboard'
+import DashNav from '../../components/shared/dashboardNavbar/DashNav'
 
 export default function DashBoardPage() {
     return (
@@ -9,5 +9,5 @@ export default function DashBoardPage() {
                 <Dashboard />
             </div>
         </>
-    );
+    )
 }

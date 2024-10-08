@@ -1,4 +1,4 @@
-import VisualsImage from '../../assets/img/Visuals-Form-Every-Customers-First-Impression.png';
+import VisualsImage from '../../assets/img/Visuals-Form-Every-Customers-First-Impression.png'
 
 export default function FirstImpression() {
     return (
@@ -30,5 +30,5 @@ export default function FirstImpression() {
                 </div>
             </div>
         </div>
-    );
+    )
 }

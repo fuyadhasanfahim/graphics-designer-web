@@ -1,12 +1,12 @@
-import { faFolder, faGear, faSignOut } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
-import { ChevronDownIcon } from '@heroicons/react/16/solid';
-import { Link } from 'react-router-dom';
+import { faFolder, faGear, faSignOut } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { ChevronDownIcon } from '@heroicons/react/16/solid'
+import { Link } from 'react-router-dom'
 
 interface ProverInterface {
-    image: string;
-    signOut: () => void;
+    image: string
+    signOut: () => void
 }
 
 export default function Prover({ image, signOut }: ProverInterface) {
@@ -58,5 +58,5 @@ export default function Prover({ image, signOut }: ProverInterface) {
                 </MenuItems>
             </Menu>
         </div>
-    );
+    )
 }

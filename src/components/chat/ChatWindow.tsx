@@ -1,9 +1,9 @@
-import { XMarkIcon } from '@heroicons/react/24/outline';
-import Messages from './Messages';
-import TextArea from './TextArea';
+import { XMarkIcon } from '@heroicons/react/24/outline'
+import Messages from './Messages'
+import TextArea from './TextArea'
 
 interface ChatWindowProps {
-    toggleChat: () => void;
+    toggleChat: () => void
 }
 
 export default function ChatWindow({ toggleChat }: ChatWindowProps) {
@@ -23,5 +23,5 @@ export default function ChatWindow({ toggleChat }: ChatWindowProps) {
                 <TextArea />
             </div>
         </div>
-    );
+    )
 }

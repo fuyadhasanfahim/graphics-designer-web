@@ -1,49 +1,49 @@
-import { useSelector } from 'react-redux';
-import Cookies from 'js-cookie';
-import { AppDispatch, RootState } from '../../../app/store';
-import { IUser } from '../../../hooks/user.interface';
-import { Link, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux'
+import Cookies from 'js-cookie'
+import { AppDispatch, RootState } from '../../../app/store'
+import { IUser } from '../../../hooks/user.interface'
+import { Link, useLocation } from 'react-router-dom'
 import {
     faEdit,
     faGear,
     faSignOut,
     faTrash,
-} from '@fortawesome/free-solid-svg-icons';
-import { userLoggedOut } from '../../../features/auth/authSlice';
-import { useDispatch } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect, useState } from 'react';
-import { Dialog, DialogPanel } from '@headlessui/react';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { getAllMessages } from '../../../features/message/messageApi';
-import Inbox from './Inbox';
+} from '@fortawesome/free-solid-svg-icons'
+import { userLoggedOut } from '../../../features/auth/authSlice'
+import { useDispatch } from 'react-redux'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useEffect, useState } from 'react'
+import { Dialog, DialogPanel } from '@headlessui/react'
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { getAllMessages } from '../../../features/message/messageApi'
+import Inbox from './Inbox'
 
 export default function DashNav() {
-    const dispatch = useDispatch<AppDispatch>();
-    const user = useSelector((state: RootState) => state.auth.user) as IUser;
-    const { messages } = useSelector((state: RootState) => state.messages);
-    const location = useLocation();
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const dispatch = useDispatch<AppDispatch>()
+    const user = useSelector((state: RootState) => state.auth.user) as IUser
+    const { messages } = useSelector((state: RootState) => state.messages)
+    const location = useLocation()
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-    const { name, username, email, profileImage, role } = user;
+    const { name, username, email, profileImage, role } = user
 
     const handleSignOut = () => {
-        dispatch(userLoggedOut());
+        dispatch(userLoggedOut())
 
-        Cookies.remove('accessToken');
-    };
+        Cookies.remove('accessToken')
+    }
 
     useEffect(() => {
         const fetchAllMessages = async () => {
             try {
-                dispatch(getAllMessages());
+                dispatch(getAllMessages())
             } catch (error) {
-                console.log(error);
+                console.log(error)
             }
-        };
+        }
 
-        fetchAllMessages();
-    }, [dispatch]);
+        fetchAllMessages()
+    }, [dispatch])
 
     const navigationLinks = (
         <>
@@ -173,7 +173,7 @@ export default function DashNav() {
                 </li>
             </ul>
         </>
-    );
+    )
 
     return (
         <>
@@ -251,5 +251,5 @@ export default function DashNav() {
                 </div>
             </div>
         </>
-    );
+    )
 }

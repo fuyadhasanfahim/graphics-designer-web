@@ -1,47 +1,47 @@
-import { useEffect, useState } from 'react';
-import { IUser } from '../../hooks/user.interface';
-import { RootState } from '../../app/store';
-import { useSelector } from 'react-redux';
-import axios from 'axios';
-import IOrder from '../../hooks/order.interface';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react'
+import { IUser } from '../../hooks/user.interface'
+import { RootState } from '../../app/store'
+import { useSelector } from 'react-redux'
+import axios from 'axios'
+import IOrder from '../../hooks/order.interface'
+import { Link } from 'react-router-dom'
 
 export default function DashUser() {
-    const user = useSelector((state: RootState) => state.auth.user) as IUser;
-    const [orders, setOrders] = useState<IOrder[]>([]);
+    const user = useSelector((state: RootState) => state.auth.user) as IUser
+    const [orders, setOrders] = useState<IOrder[]>([])
 
     useEffect(() => {
         const fetchOrder = async () => {
             try {
                 const response = await axios.get(
                     `http://localhost:5000/api/v1/orders/my-orders/${user._id}`,
-                );
-                setOrders(response.data.orders);
+                )
+                setOrders(response.data.orders)
             } catch (error) {
-                console.log(error);
+                console.log(error)
             }
-        };
+        }
 
-        fetchOrder();
-    }, [user._id]);
+        fetchOrder()
+    }, [user._id])
 
     const formatDateAndTime = (createdAt: Date) => {
-        const date = new Date(createdAt);
+        const date = new Date(createdAt)
 
         const options: Intl.DateTimeFormatOptions = {
             weekday: 'long',
-        };
-        const dateString = date.toLocaleDateString('en-US', options);
+        }
+        const dateString = date.toLocaleDateString('en-US', options)
 
         const timeOptions: Intl.DateTimeFormatOptions = {
             hour: '2-digit',
             minute: '2-digit',
             hour12: true,
-        };
-        const timeString = date.toLocaleTimeString('en-US', timeOptions);
+        }
+        const timeString = date.toLocaleTimeString('en-US', timeOptions)
 
-        return `${dateString}, ${timeString}`;
-    };
+        return `${dateString}, ${timeString}`
+    }
 
     return (
         <div className="overflow-x-auto w-full max-w-7xl mx-auto my-10 px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
@@ -84,7 +84,7 @@ export default function DashUser() {
                                 fileFormat,
                                 background,
                                 path,
-                            } = order;
+                            } = order
 
                             return (
                                 <tr key={_id}>
@@ -112,10 +112,10 @@ export default function DashUser() {
                                         {status}
                                     </td>
                                 </tr>
-                            );
+                            )
                         })}
                 </tbody>
             </table>
         </div>
-    );
+    )
 }

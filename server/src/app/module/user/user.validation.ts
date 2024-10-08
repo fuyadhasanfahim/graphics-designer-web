@@ -3,13 +3,19 @@ import { z } from 'zod'
 export const createUserSchema = z.object({
     body: z.object({
         name: z.object({
-            firstName: z.string().min(1, 'First name is required'),
-            lastName: z.string().min(1, 'Last name is required'),
+            firstName: z.string().min(1, 'First name is required').optional(),
+            lastName: z.string().min(1, 'Last name is required').optional(),
         }),
-        username: z.string().min(3, 'Username must be at least 3 characters'),
+        username: z
+            .string()
+            .min(3, 'Username must be at least 3 characters')
+            .optional(),
         email: z.string().email('Invalid email address'),
-        phone: z.string().min(10, 'Phone number must be valid'),
-        password: z.string().min(6, 'Password must be at least 6 characters'),
+        phone: z.string().min(10, 'Phone number must be valid').optional(),
+        password: z
+            .string()
+            .min(6, 'Password must be at least 6 characters')
+            .optional(),
     }),
 })
 

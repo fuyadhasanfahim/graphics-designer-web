@@ -1,44 +1,45 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import 'react-phone-input-2/lib/style.css';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import PhoneInput from 'react-phone-input-2';
-import { useRegisterMutation } from '../../features/auth/authApi';
-import toast, { Toaster } from 'react-hot-toast';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import 'react-phone-input-2/lib/style.css'
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import PhoneInput from 'react-phone-input-2'
+import { useRegisterMutation } from '../../features/auth/authApi'
+import toast, { Toaster } from 'react-hot-toast'
+import ButtonRegistration from '../../components/registration/ButtonRegistration'
 
 export default function SignUpPage() {
-    const [showPassword, setShowPassword] = useState(false);
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
-    const [password, setPassword] = useState('');
-    const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false)
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
+    const [phone, setPhone] = useState('')
+    const [password, setPassword] = useState('')
+    const navigate = useNavigate()
 
-    const [register, { data, isLoading, error }] = useRegisterMutation();
+    const [register, { data, isLoading, error }] = useRegisterMutation()
 
     useEffect(() => {
         if (data?.user && data?.accessToken) {
-            toast.success('Registration successful!');
+            toast.success('Registration successful!')
 
             setTimeout(() => {
-                navigate('/dashboard');
-            }, 2000);
+                navigate('/dashboard')
+            }, 2000)
         } else if (error) {
             const errorMessage = (
                 error as unknown as { data: { message: string } }
-            ).data.message;
+            ).data.message
 
-            toast.error(errorMessage);
+            toast.error(errorMessage)
         }
-    }, [data, error, navigate]);
+    }, [data, error, navigate])
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+        e.preventDefault()
 
-        const name = { firstName, lastName };
+        const name = { firstName, lastName }
 
         register({
             name,
@@ -46,8 +47,8 @@ export default function SignUpPage() {
             email,
             phone,
             password,
-        });
-    };
+        })
+    }
 
     return (
         <div className="px-4 py-16 sm:px-6 lg:px-8 h-dvh flex justify-center items-center">
@@ -70,7 +71,7 @@ export default function SignUpPage() {
                                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm bg-transparent"
                                 placeholder="Enter first name"
                                 value={firstName}
-                                onChange={(e) => setFirstName(e.target.value)}
+                                onChange={e => setFirstName(e.target.value)}
                                 required
                             />
                         </div>
@@ -88,7 +89,7 @@ export default function SignUpPage() {
                                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm bg-transparent"
                                 placeholder="Enter last name"
                                 value={lastName}
-                                onChange={(e) => setLastName(e.target.value)}
+                                onChange={e => setLastName(e.target.value)}
                                 required
                             />
                         </div>
@@ -106,7 +107,7 @@ export default function SignUpPage() {
                                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm bg-transparent"
                                 placeholder="Enter username"
                                 value={username}
-                                onChange={(e) => setUsername(e.target.value)}
+                                onChange={e => setUsername(e.target.value)}
                                 required
                             />
                         </div>
@@ -124,7 +125,7 @@ export default function SignUpPage() {
                                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm bg-transparent"
                                 placeholder="Enter email"
                                 value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                onChange={e => setEmail(e.target.value)}
                                 required
                             />
                         </div>
@@ -138,7 +139,7 @@ export default function SignUpPage() {
                             <PhoneInput
                                 country={'bd'}
                                 value={phone}
-                                onChange={(phone) => setPhone(phone)}
+                                onChange={phone => setPhone(phone)}
                                 inputProps={{
                                     id: 'phone',
                                     name: 'phone',
@@ -162,7 +163,7 @@ export default function SignUpPage() {
                                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm bg-transparent"
                                 placeholder="Enter password"
                                 value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                onChange={e => setPassword(e.target.value)}
                                 required
                             />
                             <button
@@ -194,9 +195,11 @@ export default function SignUpPage() {
                         </Link>
                     </p>
                 </form>
+
+                <ButtonRegistration />
             </div>
 
             <Toaster position="bottom-right" reverseOrder={false} />
         </div>
-    );
+    )
 }

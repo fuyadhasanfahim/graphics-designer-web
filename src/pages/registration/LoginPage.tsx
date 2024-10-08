@@ -1,37 +1,38 @@
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useLoginMutation } from '../../features/auth/authApi';
-import toast, { Toaster } from 'react-hot-toast';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useLoginMutation } from '../../features/auth/authApi'
+import toast, { Toaster } from 'react-hot-toast'
+import ButtonRegistration from '../../components/registration/ButtonRegistration'
 
 export default function LoginPage() {
-    const [showPassword, setShowPassword] = useState(false);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false)
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const navigate = useNavigate()
 
-    const [login, { data, isLoading, error }] = useLoginMutation();
+    const [login, { data, isLoading, error }] = useLoginMutation()
 
     useEffect(() => {
         if (data?.user && data?.accessToken) {
-            toast.success('Login successful!');
+            toast.success('Login successful!')
 
             setTimeout(() => {
-                navigate('/');
-            }, 2000);
+                navigate('/')
+            }, 2000)
         } else if (error) {
             const errorMessage = (
                 error as unknown as { data: { message: string } }
-            ).data.message;
-            toast.error(errorMessage);
+            ).data.message
+            toast.error(errorMessage)
         }
-    }, [data, error, navigate]);
+    }, [data, error, navigate])
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        await login({ email, password });
-    };
+        e.preventDefault()
+        await login({ email, password })
+    }
 
     return (
         <div className="px-4 py-16 sm:px-6 lg:px-8 h-dvh flex justify-center items-center">
@@ -55,7 +56,7 @@ export default function LoginPage() {
                                 placeholder="Enter email"
                                 value={email}
                                 autoComplete="true"
-                                onChange={(e) => setEmail(e.target.value)}
+                                onChange={e => setEmail(e.target.value)}
                                 required
                             />
                         </div>
@@ -74,7 +75,7 @@ export default function LoginPage() {
                                 placeholder="Enter password"
                                 value={password}
                                 autoComplete="true"
-                                onChange={(e) => setPassword(e.target.value)}
+                                onChange={e => setPassword(e.target.value)}
                                 required
                             />
                             <button
@@ -106,9 +107,11 @@ export default function LoginPage() {
                         </Link>
                     </p>
                 </form>
+
+                <ButtonRegistration />
             </div>
 
             <Toaster position="bottom-right" reverseOrder={false} />
         </div>
-    );
+    )
 }

@@ -1,5 +1,5 @@
-import DashNav from '../../components/shared/dashboardNavbar/DashNav';
-import AccountSettings from './AccountSettings';
+import DashNav from '../../components/shared/dashboardNavbar/DashNav'
+import AccountSettings from './AccountSettings'
 
 export default function DashAccountSettings() {
     return (
@@ -7,5 +7,5 @@ export default function DashAccountSettings() {
             <DashNav />
             <AccountSettings />
         </div>
-    );
+    )
 }

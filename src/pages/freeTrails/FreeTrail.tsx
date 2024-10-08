@@ -1,4 +1,4 @@
-import { PhotoIcon } from '@heroicons/react/24/solid';
+import { PhotoIcon } from '@heroicons/react/24/solid'
 
 const services = [
     { id: 1, name: 'eCommerce Product Photo Editing' },
@@ -8,7 +8,7 @@ const services = [
     { id: 5, name: 'Photo Retouching Service' },
     { id: 6, name: 'Shadow Creation Service' },
     { id: 7, name: 'Color Correction Service' },
-];
+]
 
 export default function FreeTrail() {
     return (
@@ -28,7 +28,7 @@ export default function FreeTrail() {
 
                                 <div className="mt-6 space-y-6">
                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5 items-center">
-                                        {services.map((service) => (
+                                        {services.map(service => (
                                             <div
                                                 key={service.id}
                                                 className="relative flex gap-x-3 mb-2"
@@ -284,5 +284,5 @@ export default function FreeTrail() {
                 </div>
             </form>
         </div>
-    );
+    )
 }

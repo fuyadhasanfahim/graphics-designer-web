@@ -1,59 +1,59 @@
-import { Link } from 'react-router-dom';
-import IOrder from '../../hooks/order.interface';
-import OrderUpdate from './OrderUpdate';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { Link } from 'react-router-dom'
+import IOrder from '../../hooks/order.interface'
+import OrderUpdate from './OrderUpdate'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 const PendingInprogress = () => {
-    const [orders, setOrders] = useState([]);
-    const [userId, setUserId] = useState('');
-    const [isModalOpen, setModalOpen] = useState(false);
-    const [selectedOrder, setSelectedOrder] = useState<IOrder | null>(null);
+    const [orders, setOrders] = useState([])
+    const [userId, setUserId] = useState('')
+    const [isModalOpen, setModalOpen] = useState(false)
+    const [selectedOrder, setSelectedOrder] = useState<IOrder | null>(null)
 
     useEffect(() => {
         const fetchOrders = async () => {
             try {
                 const response = await axios.get(
                     'http://localhost:5000/api/v1/orders/get-all-orders',
-                );
-                setOrders(response.data.data);
+                )
+                setOrders(response.data.data)
             } catch (error) {
-                console.error('Error fetching orders:', error);
+                console.error('Error fetching orders:', error)
             }
-        };
+        }
 
-        fetchOrders();
-    }, []);
+        fetchOrders()
+    }, [])
 
     const formatDateAndTime = (createdAt: Date) => {
-        const date = new Date(createdAt);
+        const date = new Date(createdAt)
 
         const options: Intl.DateTimeFormatOptions = {
             weekday: 'long',
-        };
-        const dateString = date.toLocaleDateString('en-US', options);
+        }
+        const dateString = date.toLocaleDateString('en-US', options)
 
         const timeOptions: Intl.DateTimeFormatOptions = {
             hour: '2-digit',
             minute: '2-digit',
             hour12: true,
-        };
-        const timeString = date.toLocaleTimeString('en-US', timeOptions);
+        }
+        const timeString = date.toLocaleTimeString('en-US', timeOptions)
 
-        return `${dateString}, ${timeString}`;
-    };
+        return `${dateString}, ${timeString}`
+    }
 
     const openModal = (order: IOrder, userId: string) => {
-        setSelectedOrder(order);
-        setModalOpen(true);
-        setUserId(userId);
-    };
+        setSelectedOrder(order)
+        setModalOpen(true)
+        setUserId(userId)
+    }
 
     const closeModal = () => {
-        setModalOpen(false);
-        setSelectedOrder(null);
-        setUserId('');
-    };
+        setModalOpen(false)
+        setSelectedOrder(null)
+        setUserId('')
+    }
 
     return (
         <>
@@ -96,7 +96,7 @@ const PendingInprogress = () => {
                                           status,
                                           userId,
                                           _id,
-                                      } = order;
+                                      } = order
 
                                       return (
                                           <tr key={_id}>
@@ -130,11 +130,11 @@ const PendingInprogress = () => {
                                                   </button>
                                               </td>
                                           </tr>
-                                      );
+                                      )
                                   })
                             : orders.length === 1 &&
                               (() => {
-                                  const order = orders[0];
+                                  const order = orders[0]
                                   const {
                                       createdAt,
                                       serviceName,
@@ -142,7 +142,7 @@ const PendingInprogress = () => {
                                       status,
                                       userId,
                                       _id,
-                                  } = order;
+                                  } = order
 
                                   return (
                                       <tr key={_id}>
@@ -173,7 +173,7 @@ const PendingInprogress = () => {
                                               </button>
                                           </td>
                                       </tr>
-                                  );
+                                  )
                               })()}
                     </tbody>
                 </table>
@@ -188,7 +188,7 @@ const PendingInprogress = () => {
                 />
             )}
         </>
-    );
-};
+    )
+}
 
-export default PendingInprogress;
+export default PendingInprogress
